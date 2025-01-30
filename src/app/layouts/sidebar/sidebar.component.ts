@@ -51,7 +51,9 @@ export class SidebarComponent implements OnInit {
   }
 
   toggleItem(item: any) {
-    this.menuItems.forEach((menuItem: any) => {
+    this.menuItems.forEach((menuItem: any, i: number) => {
+
+      menuItem.id = i;
 
       if (menuItem == item) {
         menuItem.isCollapsed = !menuItem.isCollapsed
@@ -59,7 +61,10 @@ export class SidebarComponent implements OnInit {
         menuItem.isCollapsed = true
       }
       if (menuItem.subItems) {
-        menuItem.subItems.forEach((subItem: any) => {
+        menuItem.subItems.forEach((subItem: any, j: number) => {
+
+          subItem.id = j;
+          subItem.parentId = i;
 
           if (subItem == item) {
             menuItem.isCollapsed = !menuItem.isCollapsed
@@ -68,7 +73,10 @@ export class SidebarComponent implements OnInit {
             subItem.isCollapsed = true
           }
           if (subItem.subItems) {
-            subItem.subItems.forEach((childitem: any) => {
+            subItem.subItems.forEach((childitem: any, k: number) => {
+
+              childitem.id = k;
+              childitem.parentId = j;
 
               if (childitem == item) {
                 childitem.isCollapsed = !childitem.isCollapsed
@@ -78,7 +86,10 @@ export class SidebarComponent implements OnInit {
                 childitem.isCollapsed = true
               }
               if (childitem.subItems) {
-                childitem.subItems.forEach((childrenitem: any) => {
+                childitem.subItems.forEach((childrenitem: any, l: number) => {
+
+                  childrenitem.id = l;
+                  childrenitem.parentId = k;
 
                   if (childrenitem == item) {
                     childrenitem.isCollapsed = false

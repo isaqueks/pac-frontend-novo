@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 // Component pages
 import { BasicComponent } from "./basic/basic.component";
 import { GridjsComponent } from "./gridjs/gridjs.component";
-import { ListjsComponent } from "./listjs/listjs.component";
+// import { ListjsComponent } from "./listjs/listjs.component";
 
 const routes: Routes = [
   {
@@ -15,10 +15,10 @@ const routes: Routes = [
     path: "gridjs",
     component: GridjsComponent
   },
-  {
-    path: "listjs",
-    component: ListjsComponent
-  }
+  // {
+  //   path: "listjs",
+  //   component: ListjsComponent
+  // }
 ];
 
 @NgModule({

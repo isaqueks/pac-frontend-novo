@@ -40,6 +40,13 @@ import { CandidatesComponent } from './landing/job/candidates/candidates.compone
 import { BlogComponent } from './landing/job/blog/blog.component';
 import { JobcategoriesComponent } from './landing/job/jobcategories/jobcategories.component';
 import { JobFooterComponent } from './landing/job/job-footer/job-footer.component';
+import { ClientService } from './services/client.service';
+import { CostCenterService } from './services/cost-center.service';
+import { FormService } from './services/form.service';
+import { TechnicianService } from './services/technician.service';
+import { TechnicianManagerService } from './services/technician-manager.service';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { CpfCnpjPipe } from './cpf-cnpj.pipe';
 
 
 
@@ -73,6 +80,7 @@ import { JobFooterComponent } from './landing/job/job-footer/job-footer.componen
     BlogComponent,
     JobcategoriesComponent,
     JobFooterComponent,
+    CpfCnpjPipe
   ],
   imports: [
     CommonModule,
@@ -80,9 +88,22 @@ import { JobFooterComponent } from './landing/job/job-footer/job-footer.componen
     NgbAccordionModule,
     NgbDropdownModule,
     SlickCarouselModule,
-    CountUpModule
+    CountUpModule,
+    NgxMaskDirective
   ],
-  exports: [BreadcrumbsComponent, ClientLogoComponent, ServicesComponent, CollectionComponent, CtaComponent, DesignedComponent, PlanComponent, FaqsComponent,LandingScrollspyDirective, ReviewComponent, CounterComponent, WorkProcessComponent, TeamComponent, ContactComponent, FooterComponent, ScrollspyDirective,
-    WalletComponent, MarketPlaceComponent, FeaturesComponent, CategoriesComponent, DiscoverComponent, TopCreatorComponent, ProcessComponent, FindjobsComponent, CandidatesComponent, BlogComponent, JobcategoriesComponent, JobFooterComponent]
+  providers: [
+    ClientService,
+    CostCenterService,
+    FormService,
+    TechnicianService,
+    TechnicianManagerService,
+    provideNgxMask(),
+    CpfCnpjPipe
+  ],
+  exports: [
+    BreadcrumbsComponent, ClientLogoComponent, ServicesComponent, CollectionComponent, CtaComponent, DesignedComponent, PlanComponent, FaqsComponent,LandingScrollspyDirective, ReviewComponent, CounterComponent, WorkProcessComponent, TeamComponent, ContactComponent, FooterComponent, ScrollspyDirective,
+    WalletComponent, MarketPlaceComponent, FeaturesComponent, CategoriesComponent, DiscoverComponent, TopCreatorComponent, ProcessComponent, FindjobsComponent, CandidatesComponent, BlogComponent, JobcategoriesComponent, JobFooterComponent,
+    NgxMaskDirective, CpfCnpjPipe
+  ]
 })
 export class SharedModule { }

@@ -61,6 +61,10 @@ const routes: Routes = [
     {
       path: 'marletplace', loadChildren: () => import('./nft-marketplace/nft-marketplace.module').then(m => m.NftMarketplaceModule)
     },
+
+    {
+      path: 'cadastro', loadChildren: () => import('./cadastro/cadastro.module').then(m => m.CadastroModule)
+    },
 ];
 
 @NgModule({

@@ -39,7 +39,7 @@ import { ApplicationEffects } from './store/Jobs/jobs_effect';
 import { ApikeyEffects } from './store/APIKey/apikey_effect';
 
 export function createTranslateLoader(http: HttpClient): any {
-  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, window.location.origin + '/assets/i18n/', '.json');
 }
 
 if (environment.defaultauth === 'firebase') {

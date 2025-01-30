@@ -1,0 +1,219 @@
+<!-- Start Breadcrumbs -->
+<app-breadcrumbs title="Form Layout" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<!-- End Breadcrumbs -->
+
+<div class="row">
+  <div class="col-xxl-12">
+      <div class="card">
+          <div class="card-header align-items-center d-flex">
+              <h4 class="card-title mb-0 flex-grow-1">Cadastrar Cliente</h4>
+              <div class="flex-shrink-0">
+                  <div class="form-check form-switch form-switch-right form-switch-md">
+                    <a class="text-decoration-underline" href="/cadastro/clientes">Listagem de clientes</a>
+                  </div>
+              </div>
+          </div><!-- end card header -->
+
+          <div class="card-body">
+              <p class="text-muted">
+                Cadastrar novo cliente
+              </p>
+              <div class="live-preview">
+                <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
+                  <!-- Primeira linha: Nome Fantasia e Razão Social -->
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="companyName" class="form-label">Nome Fantasia</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="companyName"
+                          placeholder="Digite o Nome Fantasia"
+                          formControlName="companyName"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="businessName" class="form-label">Razão Social</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="businessName"
+                          placeholder="Digite a Razão Social"
+                          formControlName="businessName"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                
+                  <!-- Segunda linha: CNPJ e CEP -->
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="cnpj" class="form-label">CNPJ</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="cnpj"
+                          placeholder="00.000.000/0000-00"
+                          mask="00.000.000/0000-00"
+                          formControlName="cnpj"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="addressZipCode" class="form-label">CEP</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="addressZipCode"
+                          placeholder="00000-000"
+                          mask="00000-000"
+                          formControlName="addressZipCode"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                
+                  <!-- Terceira linha: Rua e Número -->
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="addressStreet" class="form-label">Rua</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="addressStreet"
+                          placeholder="Digite o nome da rua"
+                          formControlName="addressStreet"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="addressNumber" class="form-label">Número</label>
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="addressNumber"
+                          placeholder="Digite o número"
+                          formControlName="addressNumber"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                
+                  <!-- Quarta linha: Complemento e Bairro -->
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="addressComplement" class="form-label">Complemento</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="addressComplement"
+                          placeholder="Digite o complemento"
+                          formControlName="addressComplement"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="addressDistrict" class="form-label">Bairro</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="addressDistrict"
+                          placeholder="Digite o bairro"
+                          formControlName="addressDistrict"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                
+                  <!-- Quinta linha: Cidade e Estado -->
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="addressCity" class="form-label">Cidade</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="addressCity"
+                          placeholder="Digite a cidade"
+                          formControlName="addressCity"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="addressState" class="form-label">Estado</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="addressState"
+                          placeholder="Digite o estado"
+                          formControlName="addressState"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                
+                  <!-- Sexta linha: E-mail e Senha -->
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="email" class="form-label">E-mail</label>
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="email"
+                          placeholder="Digite o e-mail"
+                          formControlName="email"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="password" class="form-label">Senha</label>
+                        <input
+                          type="password"
+                          class="form-control"
+                          id="password"
+                          placeholder="Digite a senha"
+                          formControlName="password"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+                
+                  <!-- Botão de Submit -->
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="text-end">
+                        <button
+                          type="submit"
+                          class="btn btn-primary"
+                          [disabled]="!clientForm.valid"
+                        >
+                          {{ isEditMode ? 'Atualizar' : 'Criar' }}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+                
+              </div>
+          </div>
+      </div>
+  </div> <!-- end col -->
+
+</div><!--end row-->
+

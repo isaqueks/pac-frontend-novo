@@ -3,14 +3,21 @@ import {Injectable, PipeTransform} from '@angular/core';
 
 import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 
-import {ListJsModel} from './listjs.model';
-import { ListJs } from 'src/app/core/data';
+import { GridJs } from 'src/app/core/data';
 import {DecimalPipe} from '@angular/common';
 import {debounceTime, delay, switchMap, tap} from 'rxjs/operators';
-import {SortColumn, SortDirection} from './listjs-sortable.directive';
+
+interface GridJsModel {
+  id: string;
+  name: string;
+  email: string;
+  position: string;
+  company: string;
+  country: string;
+}
 
 interface SearchResult {
-  countries: ListJsModel[];
+  countries: GridJsModel[];
   total: number;
 }
 
@@ -18,8 +25,6 @@ interface State {
   page: number;
   pageSize: number;
   searchTerm: string;
-  sortColumn: SortColumn;
-  sortDirection: SortDirection;
   startIndex: number;
   endIndex: number;
   totalRecords: number;
@@ -27,44 +32,33 @@ interface State {
 
 const compare = (v1: string | number, v2: string | number) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 
-function sort(countries: ListJsModel[], column: SortColumn, direction: string): ListJsModel[] {
-  if (direction === '' || column === '') {
-    return countries;
-  } else {
-    return [...countries].sort((a, b) => {
-      const res = compare(a[column], b[column]);
-      return direction === 'asc' ? res : -res;
-    });
-  }
-}
 
-function matches(country: ListJsModel, term: string, pipe: PipeTransform) {
-  return country.customer_name.toLowerCase().includes(term.toLowerCase())
+function matches(country: GridJsModel, term: string, pipe: PipeTransform) {
+  return country.id.toLowerCase().includes(term.toLowerCase())
+  || country.name.toLowerCase().includes(term.toLowerCase())
   || country.email.toLowerCase().includes(term.toLowerCase())
-  || country.phone.toLowerCase().includes(term.toLowerCase())
-  || country.date.toLowerCase().includes(term.toLowerCase())
-  || country.status.toLowerCase().includes(term.toLowerCase());
+  || country.position.toLowerCase().includes(term.toLowerCase())
+  || country.company.toLowerCase().includes(term.toLowerCase())
+  || country.country.toLowerCase().includes(term.toLowerCase())
+  ;
 
 }
 
 @Injectable({providedIn: 'root'})
-export class OrdersService {
+export class GridJsService {
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
-  private _countries$ = new BehaviorSubject<ListJsModel[]>([]);
+  private _countries$ = new BehaviorSubject<GridJsModel[]>([]);
   private _total$ = new BehaviorSubject<number>(0);
 
   private _state: State = {
     page: 1,
-    pageSize: 8,
+    pageSize: 15,
     searchTerm: '',
-    sortColumn: '',
-    sortDirection: '',
     startIndex: 0,
     endIndex: 9,
     totalRecords: 0
   };
-  product: any;
 
   constructor(private pipe: DecimalPipe) {
     this._search$.pipe(
@@ -79,7 +73,6 @@ export class OrdersService {
     });
 
     this._search$.next();
-    this.product = ListJs
   }
 
   get countries$() { return this._countries$.asObservable(); }
@@ -95,8 +88,6 @@ export class OrdersService {
   set page(page: number) { this._set({page}); }
   set pageSize(pageSize: number) { this._set({pageSize}); }
   set searchTerm(searchTerm: string) { this._set({searchTerm}); }
-  set sortColumn(sortColumn: SortColumn) { this._set({sortColumn}); }
-  set sortDirection(sortDirection: SortDirection) { this._set({sortDirection}); }
   set startIndex(startIndex: number) { this._set({ startIndex }); }
   set endIndex(endIndex: number) { this._set({ endIndex }); }
   set totalRecords(totalRecords: number) { this._set({ totalRecords }); }
@@ -107,10 +98,10 @@ export class OrdersService {
   }
 
   private _search(): Observable<SearchResult> {
-    const {sortColumn, sortDirection, pageSize, page, searchTerm} = this._state;
+    const {pageSize, page, searchTerm} = this._state;
 
     // 1. sort
-    let countries = sort(this.product, sortColumn, sortDirection);
+    let countries = GridJs;
 
     // 2. filter
     countries = countries.filter(country => matches(country, searchTerm, this.pipe));

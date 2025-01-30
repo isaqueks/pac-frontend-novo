@@ -22,16 +22,16 @@ import { TablesRoutingModule } from './tables-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 import { BasicComponent } from './basic/basic.component';
 import { GridjsComponent } from './gridjs/gridjs.component';
-import { ListjsComponent } from './listjs/listjs.component';
+// import { ListjsComponent } from './listjs/listjs.component';
 
 // Sorting page
-import { NgbdListSortableHeader } from './listjs/listjs-sortable.directive'
+// import { NgbdListSortableHeader } from './listjs/listjs-sortable.directive'
 
 @NgModule({ declarations: [
         BasicComponent,
         GridjsComponent,
-        ListjsComponent,
-        NgbdListSortableHeader
+        // ListjsComponent,
+        // NgbdListSortableHeader
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA], imports: [CommonModule,
         FormsModule,

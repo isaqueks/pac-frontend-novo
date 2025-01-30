@@ -10,7 +10,7 @@ import { TokenStorageService } from '../../core/services/token-storage.service';
 
 // Language
 import { CookieService } from 'ngx-cookie-service';
-import { LanguageService } from '../../core/services/language.service';
+import { LanguageServiceB } from '../../core/services/language.service';
 import { TranslateService } from '@ngx-translate/core';
 import { allNotification, messages } from './data'
 import { CartModel } from './topbar.model';
@@ -43,7 +43,7 @@ export class TopbarComponent implements OnInit {
   @ViewChild('removenotification') removenotification !: TemplateRef<any>;
   notifyId: any;
 
-  constructor(@Inject(DOCUMENT) private document: any, private eventService: EventService, public languageService: LanguageService, private modalService: NgbModal,
+  constructor(@Inject(DOCUMENT) private document: any, private eventService: EventService, public languageService: LanguageServiceB, private modalService: NgbModal,
     public _cookiesService: CookieService, public translate: TranslateService, private authService: AuthenticationService,
     private router: Router, private TokenStorageService: TokenStorageService) { }
 

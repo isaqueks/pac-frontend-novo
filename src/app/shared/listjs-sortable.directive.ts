@@ -1,12 +1,11 @@
   import {Directive, EventEmitter, Input, Output} from '@angular/core';
-  import {ListJsModel} from './listjs.model';
 
-  export type SortColumn = keyof ListJsModel | '';
+  export type SortColumn<T = any> = keyof T | '';
   export type SortDirection = 'asc' | 'desc' | '';
   const rotate: {[key: string]: SortDirection} = { 'asc': 'desc', 'desc': '', '': 'asc' };
 
-  export interface listSortEvent {
-    column: SortColumn;
+  export interface listSortEvent<T = any> {
+    column: SortColumn<T>;
     direction: SortDirection;
   }
 
