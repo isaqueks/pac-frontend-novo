@@ -1,0 +1,15 @@
+<!-- Spinner (Bootstrap) -->
+<div *ngIf="loading" class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+</div>
+
+<!-- Select (somente se não estiver carregando e houver itens em clients) -->
+<div class="mb-3" *ngIf="!loading && clients?.length">
+    <label for="clientSelect" class="form-label">{{ label }}</label>
+    <select id="clientSelect" class="form-select" [disabled]="readOnly" (change)="selectClient($event)"
+        [value]="value?.id">
+        <option *ngFor="let client of clients" [value]="client.id">
+            {{ client.companyName }}
+        </option>
+    </select>
+</div>

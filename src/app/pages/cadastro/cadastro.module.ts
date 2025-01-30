@@ -11,13 +11,18 @@ import { SimplebarAngularModule } from 'simplebar-angular';
 import { ClientesComponent } from './clientes/clientes.component';
 import { NgbdListSortableHeader } from 'src/app/shared/listjs-sortable.directive';
 import { CadastroClienteComponent } from './clientes/cadastro-cliente/cadastro-cliente.component';
+import { CentroCustoComponent } from './centros-custo/centro-custo.component';
+import { CadastroCentroCustoComponent } from './centros-custo/cadastro-centro-custo/cadastro-centro-custo.component';
 
 
 @NgModule({
   declarations: [
     NgbdListSortableHeader,
     ClientesComponent,
-    CadastroClienteComponent
+    CadastroClienteComponent,
+
+    CentroCustoComponent,
+    CadastroCentroCustoComponent
   ],
   imports: [
     CommonModule,

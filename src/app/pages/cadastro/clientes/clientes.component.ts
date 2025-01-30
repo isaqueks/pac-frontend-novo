@@ -5,7 +5,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UntypedFormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 
 import { PaginationService } from 'src/app/core/services/pagination.service';
-import { GridJsService } from './gridjs.service';
 import { IClient } from 'src/app/core/models/client.entity';
 import { ClientService } from 'src/app/shared/services/client.service';
 import { map } from 'lodash';
@@ -15,7 +14,7 @@ import { map } from 'lodash';
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
   styleUrls: ['./clientes.component.scss'],
-  providers: [GridJsService, DecimalPipe]
+  providers: [DecimalPipe]
 })
 
 /**

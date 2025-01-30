@@ -26,8 +26,8 @@ export const MENU: MenuItem[] = [
         link: '/cadastro/clientes',
       },
       {
-        label: 'Centros de Custo',
-        link: '/cadastr/centros-custo',
+        label: 'Setores',
+        link: '/cadastro/setores',
       },
       {
         label: 'Técnicos',

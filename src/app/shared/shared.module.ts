@@ -47,6 +47,7 @@ import { TechnicianService } from './services/technician.service';
 import { TechnicianManagerService } from './services/technician-manager.service';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { CpfCnpjPipe } from './cpf-cnpj.pipe';
+import { ClientSelectComponent } from './components/client-select/client-select.component';
 
 
 
@@ -80,7 +81,8 @@ import { CpfCnpjPipe } from './cpf-cnpj.pipe';
     BlogComponent,
     JobcategoriesComponent,
     JobFooterComponent,
-    CpfCnpjPipe
+    CpfCnpjPipe,
+    ClientSelectComponent,
   ],
   imports: [
     CommonModule,
@@ -103,7 +105,7 @@ import { CpfCnpjPipe } from './cpf-cnpj.pipe';
   exports: [
     BreadcrumbsComponent, ClientLogoComponent, ServicesComponent, CollectionComponent, CtaComponent, DesignedComponent, PlanComponent, FaqsComponent,LandingScrollspyDirective, ReviewComponent, CounterComponent, WorkProcessComponent, TeamComponent, ContactComponent, FooterComponent, ScrollspyDirective,
     WalletComponent, MarketPlaceComponent, FeaturesComponent, CategoriesComponent, DiscoverComponent, TopCreatorComponent, ProcessComponent, FindjobsComponent, CandidatesComponent, BlogComponent, JobcategoriesComponent, JobFooterComponent,
-    NgxMaskDirective, CpfCnpjPipe
+    NgxMaskDirective, CpfCnpjPipe, ClientSelectComponent
   ]
 })
 export class SharedModule { }

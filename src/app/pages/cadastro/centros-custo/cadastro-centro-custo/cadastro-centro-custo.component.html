@@ -1,0 +1,203 @@
+<div class="cost-center-form-container">
+  <div class="card">
+    <!-- Cabeçalho do Card -->
+    <div class="card-header">
+      <h5 class="card-title">
+        {{ isEditMode ? 'Editar Centro de Custo' : 'Criar Centro de Custo' }}
+      </h5>
+    </div>
+
+    <!-- Conteúdo do Card -->
+    <div class="card-body">
+      <form [formGroup]="costCenterForm" (ngSubmit)="onSubmit()">
+
+        <!-- Primeira linha -->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="companyName" class="form-label">Nome da Empresa</label>
+            <input
+              type="text"
+              class="form-control"
+              id="companyName"
+              placeholder="Insira o nome da empresa"
+              formControlName="companyName"
+              required
+            />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="businessName" class="form-label">Nome Comercial</label>
+            <input
+              type="text"
+              class="form-control"
+              id="businessName"
+              placeholder="Insira o nome comercial"
+              formControlName="businessName"
+            />
+          </div>
+        </div>
+
+        <!-- Segunda linha -->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="cnpj" class="form-label">CNPJ</label>
+            <input
+              type="text"
+              class="form-control"
+              id="cnpj"
+              formControlName="cnpj"
+              placeholder="00.000.000/0000-00"
+              mask="00.000.000/0000-00" 
+              required
+            />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="addressZipCode" class="form-label">CEP</label>
+            <input
+              type="text"
+              class="form-control"
+              id="addressZipCode"
+              formControlName="addressZipCode"
+              placeholder="00000-000"
+              mask="00000-000"
+            />
+          </div>
+        </div>
+
+        <!-- Terceira linha -->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="addressStreet" class="form-label">Rua</label>
+            <input
+              type="text"
+              class="form-control"
+              id="addressStreet"
+              formControlName="addressStreet"
+              placeholder="Ex: Avenida Paulista"
+            />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="addressNumber" class="form-label">Número</label>
+            <input
+              type="number"
+              class="form-control"
+              id="addressNumber"
+              formControlName="addressNumber"
+              placeholder="Ex: 123"
+            />
+          </div>
+        </div>
+
+        <!-- Quarta linha -->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="addressComplement" class="form-label">Complemento</label>
+            <input
+              type="text"
+              class="form-control"
+              id="addressComplement"
+              formControlName="addressComplement"
+              placeholder="Ex: Sala 501"
+            />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="addressDistrict" class="form-label">Bairro</label>
+            <input
+              type="text"
+              class="form-control"
+              id="addressDistrict"
+              formControlName="addressDistrict"
+              placeholder="Ex: Bela Vista"
+            />
+          </div>
+        </div>
+
+        <!-- Quinta linha -->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="addressCity" class="form-label">Cidade</label>
+            <input
+              type="text"
+              class="form-control"
+              id="addressCity"
+              formControlName="addressCity"
+              placeholder="Ex: São Paulo"
+            />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="addressState" class="form-label">Estado</label>
+            <input
+              type="text"
+              class="form-control"
+              id="addressState"
+              formControlName="addressState"
+              placeholder="Ex: SP"
+            />
+          </div>
+        </div>
+
+        <!-- Sexta linha -->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="email" class="form-label">E-mail</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              formControlName="email"
+              placeholder="exemplo@dominio.com"
+            />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="password" class="form-label">Senha</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              formControlName="password"
+              placeholder="Digite a senha"
+            />
+          </div>
+        </div>
+
+        <!-- Sétima linha: select de clientes -->
+        <div class="row">
+          <div class="col-md-12 mb-3">
+            <!-- Se quiser usar um select normal ao invés do componente client-select, com placeholder "Selecione o cliente" -->
+            <!--
+            <label for="clientId" class="form-label">Cliente</label>
+            <select class="form-select" id="clientId" formControlName="clientId">
+              <option value="">Selecione o cliente</option>
+              <option *ngFor="let client of clients" [value]="client.id">
+                {{ client.companyName }}
+              </option>
+            </select>
+            -->
+
+            <!-- Mantendo o componente <client-select> caso seja parte do seu projeto Angular -->
+            <client-select
+              class="w-full"
+              [readOnly]="isEditMode"
+              [(value)]="selectedClient"
+            >
+            </client-select>
+          </div>
+        </div>
+
+        <!-- Botão de ação -->
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="!costCenterForm.valid"
+        >
+          {{ isEditMode ? 'Atualizar' : 'Criar' }}
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

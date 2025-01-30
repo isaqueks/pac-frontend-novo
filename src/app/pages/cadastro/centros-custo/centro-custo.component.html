@@ -1,5 +1,5 @@
 <!-- Start Breadcrumbs -->
-<app-breadcrumbs title="Clientes" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<app-breadcrumbs title="Setores" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 <!-- End Breadcrumbs -->
 
 <div class="row">
@@ -9,38 +9,23 @@
             <div class="container">
               <div class="row">
                 <div class="col">
-                  <h4 class="card-title mb-0 flex-grow-1">
-                    Listagem de Clientes
+                  <h4 class="card-title flex-grow-1 mb-2">
+                    Listagem de Setores
                   </h4>
+                  <client-select class="h-[50px] ml-3" (valueChange)="onClientChange($event)"></client-select>
                 </div>
                 <div class="col">
                   <div class="float-end">
-                    <a href="/cadastro/clientes/cadastrar" class="btn btn-primary waves-effect waves-light">
-                      <i class="ri-add-line align-middle me-2"></i> Cadastrar Cliente
+                    <a href="/cadastro/setores/cadastrar" class="btn btn-primary waves-effect waves-light">
+                      <i class="ri-add-line align-middle me-2"></i> Cadastrar Setor
                     </a>
                   </div>
                 </div>
               </div>
             </div>
-          </div><!-- end card header -->
+          </div>
 
           <div class="card-body">
-
-            <!-- <div class="container">
-              <div class="row">
-                <div class="col m-0 p-0">
-                  <div class="search-box d-inline-block mb-2 w-100">
-                    <input type="text" class="form-control search" placeholder="Pesquisa..." [(ngModel)]="search">
-                    <i class="ri-search-line search-icon"></i>
-                  </div>
-                </div>
-                <div class="col-8">
-                  <div class="progress" *ngIf="loading">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"></div>
-                  </div>&nbsp;
-                </div>
-              </div>
-            </div> -->
 
             <div class="progress" *ngIf="loading">
               <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"></div>
@@ -50,26 +35,27 @@
               <table class="table table-gridjs">
                 <thead>
                 <tr>
-                  <th class="sort" (click)="onSort('id')">Nome Fantasia</th>
-                  <th class="sort" (click)="onSort('name')">Razão Social</th>
-                  <th class="sort" (click)="onSort('email')">CNPJ</th>
-                  <th class="sort" (click)="onSort('position')">E-mail</th>
+                  <th class="sort">E-mail</th>
+                  <th class="sort">Razão Social</th>
+                  <th class="sort">Nome Fantasia</th>
+                  <th class="sort">CNPJ</th>
+                  <th class="sort">Cliente</th>
                 <th>Ações</th>
                 </tr>
                 </thead>
                 <tbody>
                   @for(data of items;track $index){
                 <tr>
-                  <td><ngb-highlight [result]="data.companyName" [term]="search"></ngb-highlight></td>
-                  <td><ngb-highlight [result]="data.businessName" [term]="search"></ngb-highlight></td>
-                  <td><ngb-highlight [result]="data.cnpj | cpfCnpj" [term]="search"></ngb-highlight></td>
                   <td><ngb-highlight [result]="data.user.email" [term]="search"></ngb-highlight></td>
-                  <!-- <td><ngb-highlight [result]="data.company" [term]="service.searchTerm"></ngb-highlight></td>
-                  <td><ngb-highlight [result]="data.country" [term]="service.searchTerm"></ngb-highlight></td> -->
+                  <td><ngb-highlight [result]="data.businessName" [term]="search"></ngb-highlight></td>
+                  <td><ngb-highlight [result]="data.companyName" [term]="search"></ngb-highlight></td>
+                  <td><ngb-highlight [result]="data.cnpj | cpfCnpj" [term]="search"></ngb-highlight></td>
+                  <td><ngb-highlight [result]="data.client.companyName" [term]="search"></ngb-highlight></td>
+
                   <td data-column-id="actions" class="gridjs-td">
                     <span>
                       <a [href]="'/cadastro/clientes/'+data.id" class="text-body text-decoration-underline">Editar</a>&nbsp;|&nbsp;
-                      <a href="javascript:void(0);" (click)="deleteClient(data.id)" class="text-body text-decoration-underline">Excluir</a>
+                      <a href="javascript:void(0);" (click)="delete(data.id)" class="text-body text-decoration-underline">Excluir</a>
                     </span>
                   </td>
                 </tr>
