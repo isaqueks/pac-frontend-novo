@@ -30,6 +30,10 @@ const routes: Routes = [
     component: CadastroCentroCustoComponent
   },
   {
+    path: 'setores/:id',
+    component: CadastroCentroCustoComponent
+  },
+  {
     path: 'tecnicos',
     component: TecnicosComponent
   },

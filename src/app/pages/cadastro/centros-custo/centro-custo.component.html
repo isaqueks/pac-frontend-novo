@@ -53,10 +53,27 @@
                   <td><ngb-highlight [result]="data.client.companyName" [term]="search"></ngb-highlight></td>
 
                   <td data-column-id="actions" class="gridjs-td">
-                    <span>
-                      <a [href]="'/cadastro/clientes/'+data.id" class="text-body text-decoration-underline">Editar</a>&nbsp;|&nbsp;
-                      <a href="javascript:void(0);" (click)="delete(data.id)" class="text-body text-decoration-underline">Excluir</a>
-                    </span>
+                    <div class="d-flex gap-2">
+                      <!-- Botão Editar -->
+                      <a
+                        [routerLink]="['/cadastro/setores', data.id]"
+                        class="btn btn-icon btn-sm btn-ghost-info"
+                        title="Editar"
+                      >
+                        <!-- fs-5 faz o ícone ser 1.25rem -->
+                        <!-- Você pode usar fs-4 (1.5rem), fs-3 (1.75rem), etc. conforme desejar -->
+                        <i class="ri-edit-line align-bottom fs-5"></i>
+                      </a>
+                  
+                      <!-- Botão Excluir -->
+                      <button
+                        (click)="delete(data.id)"
+                        class="btn btn-icon btn-sm btn-ghost-danger"
+                        title="Excluir"
+                      >
+                        <i class="ri-delete-bin-line align-bottom fs-5"></i>
+                      </button>
+                    </div>
                   </td>
                 </tr>
               }
