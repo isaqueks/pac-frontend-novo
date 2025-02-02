@@ -1,0 +1,37 @@
+<!-- Spinner -->
+<div *ngIf="loading" class="spinner-border text-primary" role="status">
+  <span class="visually-hidden">Carregando...</span>
+</div>
+
+<!-- Form Row (somente visível se loading = true, pois no original estava [attr.hidden]="!loading") -->
+<div class="row">
+  <div class="col-md-6 mb-3">
+    <label for="clientSelect" class="form-label">Selecionar Cliente</label>
+    <select
+      id="clientSelect"
+      class="form-select"
+      [disabled]="readOnly || loading"
+      (change)="selectClient($event)"
+      [value]="selectedClient?.id"
+    >
+      <option *ngFor="let client of clients" [value]="client.id">
+        {{ client.companyName }}
+      </option>
+    </select>
+  </div>
+
+  <div class="col-md-6 mb-3">
+    <label for="costCenterSelect" class="form-label">{{ label }}</label>
+    <select
+      id="costCenterSelect"
+      class="form-select"
+      [disabled]="readOnly || loading"
+      (change)="selectCostCenter($event)"
+      [value]="value?.id"
+    >
+      <option *ngFor="let costCenter of costCenters" [value]="costCenter.id">
+        {{ costCenter.companyName }}
+      </option>
+    </select>
+  </div>
+</div>

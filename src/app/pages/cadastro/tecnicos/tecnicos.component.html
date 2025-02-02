@@ -1,1 +1,105 @@
-<p>tecnicos works!</p>
+<!-- Start Breadcrumbs -->
+<app-breadcrumbs title="Técnicos" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<!-- End Breadcrumbs -->
+
+<div class="row">
+  <div class="col-lg-12">
+      <div class="card">
+          <div class="card-header">
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <h4 class="card-title flex-grow-1 mb-2">
+                    Listagem de Técnicos
+                  </h4>
+                  <cost-center-select class="h-[50px] ml-3" (valueChange)="onCostCenterChange($event)"></cost-center-select>
+                </div>
+                <div class="col">
+                  <div class="float-end">
+                    <a href="/cadastro/tecnicos/cadastrar" class="btn btn-primary waves-effect waves-light">
+                      <i class="ri-add-line align-middle me-2"></i> Cadastrar Técnico
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body">
+
+            <div class="progress" *ngIf="loading">
+              <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"></div>
+            </div>&nbsp;
+          
+            <div class="table-responsive mt-1">
+              <table class="table table-gridjs">
+                <thead>
+                <tr>
+                  <th class="sort">E-mail</th>
+                  <th class="sort">Nome</th>
+                  <th class="sort">Telefone</th>
+                  <th class="sort">Documento</th>
+                  <th class="sort">Centro de Custo</th>
+                <th>Ações</th>
+                </tr>
+                </thead>
+                <tbody>
+                  @for(data of items;track $index){
+                <tr>
+                  <td><ngb-highlight [result]="data.user.email" [term]="search"></ngb-highlight></td>
+                  <td><ngb-highlight [result]="data.name" [term]="search"></ngb-highlight></td>
+                  <td><ngb-highlight [result]="data.phone" [term]="search"></ngb-highlight></td>
+                  <td><ngb-highlight [result]="data.document| cpfCnpj" [term]="search"></ngb-highlight></td>
+                  <td><ngb-highlight [result]="data.costCenter.companyName" [term]="search"></ngb-highlight></td>
+
+                  <td data-column-id="actions" class="gridjs-td">
+                    <div class="d-flex gap-2">
+                      <!-- Botão Editar -->
+                      <a
+                        [routerLink]="['/cadastro/tecnicos', data.id]"
+                        class="btn btn-icon btn-sm btn-ghost-info"
+                        title="Editar"
+                      >
+                        <!-- fs-5 faz o ícone ser 1.25rem -->
+                        <!-- Você pode usar fs-4 (1.5rem), fs-3 (1.75rem), etc. conforme desejar -->
+                        <i class="ri-edit-line align-bottom fs-5"></i>
+                      </a>
+                  
+                      <!-- Botão Excluir -->
+                      <button
+                        (click)="delete(data.id)"
+                        class="btn btn-icon btn-sm btn-ghost-danger"
+                        title="Excluir"
+                      >
+                        <i class="ri-delete-bin-line align-bottom fs-5"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              }
+                </tbody>
+              </table>
+            </div>
+            <div class="row justify-content-md-between align-items-md-center">
+              <div class="col-sm-12 col-md-5">
+                  <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                      Página {{page}} de {{total ? (total / pageSize) : 1}}
+                  </div>
+              </div>
+              <!-- Pagination -->
+              <div class="col-sm-12 col-md-5">
+                  <div class="text-md-right float-md-end gridjs-pagination">
+                    <ngb-pagination
+                    [collectionSize]="total" [(page)]="page" [pageSize]="pageSize">
+                  </ngb-pagination>
+                  </div>
+              </div>
+              <!-- End Pagination -->
+            </div>
+          </div><!-- end card-body -->
+      </div><!-- end card -->
+  </div>
+  <!-- end col -->
+</div>
+<!-- end row -->
+

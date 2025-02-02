@@ -13,16 +13,22 @@ import { NgbdListSortableHeader } from 'src/app/shared/listjs-sortable.directive
 import { CadastroClienteComponent } from './clientes/cadastro-cliente/cadastro-cliente.component';
 import { CentroCustoComponent } from './centros-custo/centro-custo.component';
 import { CadastroCentroCustoComponent } from './centros-custo/cadastro-centro-custo/cadastro-centro-custo.component';
+import { TecnicosComponent } from './tecnicos/tecnicos.component';
+import { CadastroTecnicosComponent } from './tecnicos/cadastro-tecnicos/cadastro-tecnicos.component';
 
 
 @NgModule({
   declarations: [
     NgbdListSortableHeader,
+
     ClientesComponent,
     CadastroClienteComponent,
 
     CentroCustoComponent,
-    CadastroCentroCustoComponent
+    CadastroCentroCustoComponent,
+
+    TecnicosComponent,
+    CadastroTecnicosComponent
   ],
   imports: [
     CommonModule,
