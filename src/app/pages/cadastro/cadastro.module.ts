@@ -15,6 +15,8 @@ import { CentroCustoComponent } from './centros-custo/centro-custo.component';
 import { CadastroCentroCustoComponent } from './centros-custo/cadastro-centro-custo/cadastro-centro-custo.component';
 import { TecnicosComponent } from './tecnicos/tecnicos.component';
 import { CadastroTecnicosComponent } from './tecnicos/cadastro-tecnicos/cadastro-tecnicos.component';
+import { RespTecnicosComponent } from './resp-tecnicos/resp-tecnicos.component';
+import { CadastroResponsaveisTecnicosComponent } from './resp-tecnicos/cadastro-responsaveis-tecnicos/cadastro-responsaveis-tecnicos.component';
 
 
 @NgModule({
@@ -28,7 +30,10 @@ import { CadastroTecnicosComponent } from './tecnicos/cadastro-tecnicos/cadastro
     CadastroCentroCustoComponent,
 
     TecnicosComponent,
-    CadastroTecnicosComponent
+    CadastroTecnicosComponent,
+
+    RespTecnicosComponent,
+     CadastroResponsaveisTecnicosComponent
   ],
   imports: [
     CommonModule,

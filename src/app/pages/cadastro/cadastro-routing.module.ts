@@ -8,6 +8,7 @@ import { FormulariosComponent } from './formularios/formularios.component';
 import { CadastroClienteComponent } from './clientes/cadastro-cliente/cadastro-cliente.component';
 import { CadastroCentroCustoComponent } from './centros-custo/cadastro-centro-custo/cadastro-centro-custo.component';
 import { CadastroTecnicosComponent } from './tecnicos/cadastro-tecnicos/cadastro-tecnicos.component';
+import { CadastroResponsaveisTecnicosComponent } from './resp-tecnicos/cadastro-responsaveis-tecnicos/cadastro-responsaveis-tecnicos.component';
 
 const routes: Routes = [
   {
@@ -51,8 +52,12 @@ const routes: Routes = [
     component: RespTecnicosComponent
   },
   {
-    path: 'responsaveis-tecnicos/cadastro/:id',
-    component: RespTecnicosComponent
+    path: 'responsaveis-tecnicos/cadastrar',
+    component: CadastroResponsaveisTecnicosComponent
+  },
+  {
+    path: 'responsaveis-tecnicos/:id',
+    component: CadastroResponsaveisTecnicosComponent
   },
   {
     path: 'formularios',

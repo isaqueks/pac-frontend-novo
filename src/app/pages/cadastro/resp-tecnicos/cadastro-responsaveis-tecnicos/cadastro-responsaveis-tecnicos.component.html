@@ -1,0 +1,101 @@
+<div class="technician-form-container">
+  <div class="card">
+    <!-- Cabeçalho do Card -->
+    <div class="card-header">
+      <h5 class="card-title">
+        {{ isEditMode ? 'Editar Responsável Técnico' : 'Criar Responsável Técnico' }}
+      </h5>
+    </div>
+
+    <!-- Corpo do Card -->
+    <div class="card-body">
+      <form [formGroup]="technicianForm" (ngSubmit)="onSubmit()">
+        <!-- Primeira linha (Nome, Telefone) -->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="name" class="form-label">Nome</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              formControlName="name"
+              required
+              placeholder="Informe o nome"
+            />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="phone" class="form-label">Telefone</label>
+            <input
+              type="text"
+              class="form-control"
+              id="phone"
+              formControlName="phone"
+              placeholder="(00) 00000-0000"
+              mask="(00) 00000-0000||(00) 0000-0000"
+            />
+          </div>
+        </div>
+
+        <!-- Segunda linha (Documento) -->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="document" class="form-label">Documento</label>
+            <input
+              type="text"
+              class="form-control"
+              id="document"
+              formControlName="document"
+              placeholder="CPF ou CNPJ"
+              mask="000.000.000-00||00.000.000/0000-00"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Terceira linha (E-mail, Senha) -->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="email" class="form-label">E-mail</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              formControlName="email"
+              placeholder="exemplo@dominio.com"
+              required
+            />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="password" class="form-label">Senha</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              formControlName="password"
+              placeholder="••••••"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Componente de Seleção de Centro de Custo -->
+        <cost-center-select
+          [readOnly]="isEditMode"
+          class="w-100"
+          [(value)]="selectedCostCenter"
+        ></cost-center-select>
+
+        <!-- Botão de ação -->
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="!technicianForm.valid"
+        >
+          {{ isEditMode ? 'Atualizar' : 'Criar' }}
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

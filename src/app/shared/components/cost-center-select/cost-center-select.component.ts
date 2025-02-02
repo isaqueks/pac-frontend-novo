@@ -51,6 +51,9 @@ export class CostCenterSelectComponent {
       if (costCenters.length > 0) {
         this.selectCostCenter({ target: { value: costCenters[0].id } });
       }
+      else {
+        this.selectCostCenter({ target: { value: null } });
+      }
       this.loading = false;
     });
   }
