@@ -1,0 +1,102 @@
+<!-- Barra de progresso ou spinner global (opcional) -->
+<div *ngIf="loading" class="progress mb-3">
+  <div
+    class="progress-bar progress-bar-striped progress-bar-animated"
+    role="progressbar"
+    style="width: 100%"
+  >
+    <!-- Pode adicionar texto ou deixar vazio -->
+  </div>
+</div>
+
+<!-- Renderiza as abas apenas se existir `user` -->
+<div *ngIf="user">
+
+  <!-- Nav Tabs -->
+  <ul class="nav nav-tabs" id="formsTab" role="tablist">
+
+    <!-- Aba "Responder Formulário" visível apenas se for Técnico -->
+    <li class="nav-item" role="presentation" *ngIf="user?.role === roles.TECHNICIAN">
+      <button
+        class="nav-link active"
+        id="responder-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#responder"
+        type="button"
+        role="tab"
+        aria-controls="responder"
+        aria-selected="true"
+      >
+        Responder Formulário
+      </button>
+    </li>
+
+    <!-- Aba "Respostas" (sempre visível) -->
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link"
+        id="respostas-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#respostas"
+        type="button"
+        role="tab"
+        aria-controls="respostas"
+        aria-selected="false"
+      >
+        Respostas
+      </button>
+    </li>
+  </ul>
+
+  <!-- Conteúdo das abas -->
+  <div class="tab-content" id="formsTabContent">
+    
+    <!-- CONTEÚDO: Responder Formulário (apenas se técnico) -->
+    <div
+      class="tab-pane fade show active"
+      id="responder"
+      role="tabpanel"
+      aria-labelledby="responder-tab"
+      *ngIf="user?.role === roles.TECHNICIAN"
+    >
+      <!-- Barra de progresso dentro da aba (opcional) -->
+      <div *ngIf="loading" class="progress my-3">
+        <div
+          class="progress-bar progress-bar-striped progress-bar-animated"
+          role="progressbar"
+          style="width: 100%"
+        ></div>
+      </div>
+
+      <!-- Componente que cria o formulário para resposta -->
+      <app-criar-execucao
+        *ngIf="form"
+        [form]="form"
+      ></app-criar-execucao>
+    </div>
+
+    <!-- CONTEÚDO: Respostas -->
+    <div
+      class="tab-pane fade pt-4"
+      id="respostas"
+      role="tabpanel"
+      aria-labelledby="respostas-tab"
+    >
+      <!-- Barra de progresso dentro da aba (opcional) -->
+      <div *ngIf="loading" class="progress my-3">
+        <div
+          class="progress-bar progress-bar-striped progress-bar-animated"
+          role="progressbar"
+          style="width: 100%"
+        ></div>
+      </div>
+
+      <!-- Componente que lista as respostas -->
+      <app-listagem-execucoes
+        *ngIf="form"
+        [form]="form"
+      ></app-listagem-execucoes>
+    </div>
+
+  </div>
+</div>

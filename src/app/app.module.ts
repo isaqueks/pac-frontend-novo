@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 // search module
@@ -37,6 +37,9 @@ import { FileManagerEffects } from './store/File Manager/filemanager_effect';
 import { TodoEffects } from './store/Todo/todo_effect';
 import { ApplicationEffects } from './store/Jobs/jobs_effect';
 import { ApikeyEffects } from './store/APIKey/apikey_effect';
+import { registerLocaleData } from '@angular/common';
+import localeBr from '@angular/common/locales/pt';
+
 
 export function createTranslateLoader(http: HttpClient): any {
   return new TranslateHttpLoader(http, window.location.origin + '/assets/i18n/', '.json');
@@ -48,10 +51,14 @@ if (environment.defaultauth === 'firebase') {
   FakeBackendInterceptor;
 }
 
+registerLocaleData(localeBr, 'pt');
+
 @NgModule({ declarations: [
         AppComponent
     ],
-    bootstrap: [AppComponent], imports: [TranslateModule.forRoot({
+    bootstrap: [AppComponent], 
+    imports: [
+        TranslateModule.forRoot({
             defaultLanguage: 'en',
             loader: {
                 provide: TranslateLoader,
@@ -86,6 +93,7 @@ if (environment.defaultauth === 'firebase') {
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true },
+        { provide: LOCALE_ID, useValue: 'pt' },
         provideHttpClient(withInterceptorsFromDi()),
     ] })
 export class AppModule { }

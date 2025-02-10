@@ -1,0 +1,276 @@
+<!-- Barra de progresso (substituindo <mat-progress-bar>) -->
+  <div *ngIf="loading" class="progress mb-3">
+    <div
+      class="progress-bar progress-bar-striped progress-bar-animated w-100"
+      role="progressbar"
+    ></div>
+  </div>
+  
+  <!-- Exibe o formulário somente se existir `form` -->
+  <div class="form-fill-container" *ngIf="form">
+    <div class="card">
+      <!-- Cabeçalho do card principal -->
+      <div class="card-header">
+        <h5 class="card-title">{{ form.title }}</h5>
+        <h6 class="card-subtitle text-muted">
+          {{ form.costCenter?.companyName }}
+        </h6>
+      </div>
+  
+      <!-- Corpo do card -->
+      <div class="card-body">
+        <form>
+          <!-- Loop pelos componentes do formulário -->
+          <div *ngFor="let component of form.components; let i = index">
+            <!-- Card para cada "componente" -->
+            <div class="card p-3 mb-3">
+              <!-- Cabeçalho do componente -->
+              <div class="card-header">
+                <h5 class="card-title mb-0">{{ component.title }}</h5>
+                <small class="text-muted">{{ component.subtitle }}</small>
+              </div>
+  
+              <!-- Corpo do componente -->
+              <div class="card-body">
+                <ng-container [ngSwitch]="component.type">
+  
+                  <!-- Campo Numérico -->
+                  <div *ngSwitchCase="'number'">
+                    <div class="mb-3">
+                      <label class="form-label">{{ component.title }}</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        [disabled]="readOnly"
+                        [required]="component.required"
+                        [value]="values[i]"
+                        (change)="values[i] = $event.target['value']"
+                      />
+                    </div>
+                  </div>
+  
+                  <!-- Campo Texto -->
+                  <div *ngSwitchCase="'text'">
+                    <div class="mb-3">
+                      <label class="form-label">{{ component.title }}</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        [disabled]="readOnly"
+                        [required]="component.required"
+                        [value]="values[i]"
+                        (change)="values[i] = $event.target['value']"
+                      />
+                    </div>
+                  </div>
+  
+                  <!-- Lista de Checkboxes -->
+                  <div *ngSwitchCase="'checkbox_list'">
+                    <div class="mb-3">
+                      <!-- Opcional: <label class="form-label">{{ component.title }}</label> -->
+                      <div
+                        class="form-check"
+                        *ngFor="let option of component.options; let j = index"
+                      >
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          [disabled]="readOnly"
+                          [required]="component.required"
+                          [checked]="values[i][j]"
+                          (change)="values[i][j] = $event.target['checked']"
+                          id="checkbox_{{ i }}_{{ j }}"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="checkbox_{{ i }}_{{ j }}"
+                        >
+                          {{ option }}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+  
+                  <!-- Lista de Rádio -->
+                  <div *ngSwitchCase="'radio_list'">
+                    <div class="mb-3">
+                      <!-- Opcional: <label class="form-label">{{ component.title }}</label> -->
+                      <div
+                        class="form-check"
+                        *ngFor="let option of component.options; let j = index"
+                      >
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="radioGroup_{{ i }}"
+                          [value]="option"
+                          [disabled]="readOnly"
+                          [checked]="values[i] === option"
+                          [required]="component.required"
+                          (change)="values[i] = option"
+                          id="radio_{{ i }}_{{ j }}"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="radio_{{ i }}_{{ j }}"
+                        >
+                          {{ option }}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+  
+                  <!-- Campo de Data -->
+                  <div *ngSwitchCase="'date'">
+                    <div class="mb-3">
+                      <label class="form-label">{{ component.title }}</label>
+                      <!-- Se quiser um datepicker específico, substitua por algo como ngx-bootstrap, flatpickr, etc. -->
+                      <input
+                        type="date"
+                        class="form-control"
+                        [disabled]="readOnly"
+                        [required]="component.required"
+                        [value]="values[i]"
+                        (change)="values[i] = $event.target['value']"
+                      />
+                    </div>
+                  </div>
+  
+                  <!-- Campo de Upload -->
+                  <div *ngSwitchCase="'upload'">
+                    <div class="mb-3">
+                      <label class="form-label">{{ component.title }}</label>
+  
+                      <!-- Se estiver editável (não-readOnly) -->
+                      <div *ngIf="!readOnly">
+                        <input
+                          class="form-control"
+                          multiple
+                          type="file"
+                          (change)="values[i] = $event.target['files']"
+                          [required]="component.required"
+                        />
+                      </div>
+  
+                      <!-- Se estiver em modo leitura (readOnly) -->
+                      <div *ngIf="readOnly">
+                        <ul class="list-group">
+                          <li
+                            class="list-group-item d-flex align-items-center"
+                            *ngFor="let file of values[i]"
+                          >
+                            <button
+                              class="btn btn-primary btn-sm me-2"
+                              (click)="download(file.url)"
+                            >
+                              <i class="ri-download-line align-middle"></i>
+                            </button>
+                            <span>{{ file.name }}</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+  
+                  <!-- Tipo Desconhecido -->
+                  <div *ngSwitchDefault>
+                    <p class="text-danger">
+                      Tipo de componente não suportado: {{ component.type }}
+                    </p>
+                  </div>
+                </ng-container>
+  
+                <!-- Justificativa (textarea) -->
+                <div
+                  *ngIf="component.insertJustification"
+                  class="mb-3"
+                >
+                  <label class="form-label">Justificativa (Obrigatório)</label>
+                  <textarea
+                    class="form-control"
+                    [disabled]="readOnly"
+                    (change)="justifications[i] = $event.target['value']"
+                  >{{ justifications[i] || '' }}</textarea>
+                </div>
+              </div>
+  
+              <!-- Rodapé do card (equivalente a mat-card-footer) -->
+              <div
+                class="card-footer"
+                *ngIf="(!readOnly && component.required) || showNotes"
+              >
+                <!-- Exibe "Obrigatório" se não for readOnly e for required -->
+                <div>
+                  <small
+                    class="text-muted"
+                    *ngIf="!readOnly && component.required"
+                    >Obrigatório</small
+                  >
+                </div>
+  
+                <!-- Exibe observação do techManager se showNotes for true -->
+                <div *ngIf="showNotes && notes[i]?.techManager">
+                  <small class="text-muted">
+                    {{ notes[i].techManager.name }} deixou uma observação:
+                  </small>
+                </div>
+  
+                <!-- Checkbox "Dentro dos conformes" -->
+                <div class="form-check" *ngIf="showNotes">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [disabled]="readOnlyNotes"
+                    [checked]="notes[i]?.accordingly"
+                    (change)="notes[i].accordingly = $event.target['checked']"
+                    id="accordingly_{{ i }}"
+                  />
+                  <label
+                    class="form-check-label"
+                    for="accordingly_{{ i }}"
+                  >
+                    Dentro dos conformes
+                  </label>
+                </div>
+  
+                <!-- Observações -->
+                <div *ngIf="showNotes" class="mt-2">
+                  <label class="form-label">Observações</label>
+                  <textarea
+                    class="form-control"
+                    [disabled]="readOnlyNotes"
+                    (change)="notes[i].value = $event.target['value']"
+                  >{{ notes[i]?.value || '' }}</textarea>
+                </div>
+              </div>
+            </div>
+  
+            <!-- Divisor (equivalente a <mat-divider>) -->
+            <hr/>
+          </div>
+  
+          <!-- Botões de ação (Enviar / Salvar Observações) -->
+          <div class="mt-3">
+            <button
+              *ngIf="!readOnly"
+              class="btn btn-primary me-2"
+              type="button"
+              (click)="submit()"
+            >
+              Enviar Respostas
+            </button>
+            <button
+              [disabled]="!notesChanged()"
+              *ngIf="showNotes && !readOnlyNotes"
+              class="btn btn-primary"
+              type="button"
+              (click)="submitNotes()"
+            >
+              Salvar Observações
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  

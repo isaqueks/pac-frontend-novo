@@ -1,5 +1,5 @@
 <!-- Start Breadcrumbs -->
-<app-breadcrumbs title="Formulários" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<app-breadcrumbs title="Respostas do formulário" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 <!-- End Breadcrumbs -->
 
 <div class="row">
@@ -10,17 +10,16 @@
               <div class="row">
                 <div class="col">
                   <h4 class="card-title flex-grow-1 mb-2">
-                    Listagem de Formulários
+                    Listagem de respostas
                   </h4>
-                  <cost-center-select class="h-[50px] ml-3" (valueChange)="onCostCenterChange($event)"></cost-center-select>
                 </div>
-                <div class="col">
+                <!-- <div class="col">
                   <div class="float-end">
                     <a href="/cadastro/formularios/cadastrar" class="btn btn-primary waves-effect waves-light">
                       <i class="ri-add-line align-middle me-2"></i> Cadastrar Formulário
                     </a>
                   </div>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
@@ -35,30 +34,28 @@
               <table class="table table-gridjs">
                 <thead>
                 <tr>
-                  <th class="sort">Título</th>
-                  <th class="sort">Centro de Custo</th>
-                  <th class="sort">Criado em</th>
+                  <th class="sort">Técnico</th>
+                  <th class="sort">Respondido em</th>
                   <th>Ações</th>
                 </tr>
                 </thead>
                 <tbody>
                   @for(data of items;track $index){
                 <tr>
-                  <td><ngb-highlight [result]="data.title" [term]="search"></ngb-highlight></td>
-                  <td><ngb-highlight [result]="data.costCenter.companyName" [term]="search"></ngb-highlight></td>
+                  <td><ngb-highlight [result]="data.technician.name" [term]="search"></ngb-highlight></td>
                   <td><ngb-highlight [result]="data.createdAt | date" [term]="search"></ngb-highlight></td>
 
                   <td data-column-id="actions" class="gridjs-td">
                     <div class="d-flex gap-2">
                       <!-- Botão Editar -->
                       <a
-                        [routerLink]="['/cadastro/formularios/execucoes', data.id]"
+                        (click)="viewExecution(data)"
                         class="btn btn-icon btn-sm btn-ghost-info"
                         title="Ver respostas"
                       >
                         <!-- fs-5 faz o ícone ser 1.25rem -->
                         <!-- Você pode usar fs-4 (1.5rem), fs-3 (1.75rem), etc. conforme desejar -->
-                        <i class="ri-article-line align-bottom fs-5"></i>
+                        <i class="ri-eye-line align-bottom fs-5"></i>
                       </a>
                   
                       <!-- Botão Excluir -->

@@ -1,0 +1,232 @@
+<div class="form-edit-container">
+  <!-- Card principal -->
+  <div class="card">
+    <!-- Cabeçalho do card -->
+    <div class="card-header">
+      <h5 class="card-title">
+        {{ isEditMode ? 'Editar Formulário' : 'Criar Formulário' }}
+      </h5>
+    </div>
+    
+    <!-- Corpo do card (onde fica o formulário) -->
+    <div class="card-body">
+      <!-- Selecionar Cost Center (componente customizado) -->
+      <cost-center-select class="w-100" [(value)]="selectedCostCenter"></cost-center-select>
+      
+      <!-- Título do Formulário -->
+      <div class="mb-3">
+        <label for="formTitle" class="form-label">Título do Formulário</label>
+        <input
+          type="text"
+          id="formTitle"
+          class="form-control"
+          [(ngModel)]="form.title"
+          name="title"
+          required
+          placeholder="Digite o título..."
+        />
+      </div>
+
+      <!-- Separador (mat-divider → <hr>) -->
+      <hr/>
+
+      <!-- Seção de componentes do formulário -->
+      <div class="form-components-section">
+        <!-- Título interno -->
+        <div class="mb-3">
+          <h6 class="card-title">Componentes do Formulário</h6>
+        </div>
+
+        <!-- Loop dos componentes -->
+        <div
+          class="form-component mt-2 p-3 border rounded"
+          *ngFor="let component of formComponents; let i = index"
+        >
+          <div class="card">
+            <!-- Cabeçalho do componente -->
+            <div class="card-header">
+              <div class="mb-3">
+                <label
+                  for="compTitle-{{i}}"
+                  class="form-label"
+                >
+                  Título da Questão
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="compTitle-{{i}}"
+                  [(ngModel)]="component.title"
+                  name="compTitle"
+                  required
+                  placeholder="Pergunta principal..."
+                />
+              </div>
+            </div>
+
+            <!-- Conteúdo do componente -->
+            <div class="card-body">
+              <div class="row mb-3">
+                <!-- Subtítulo -->
+                <div class="col-md-8">
+                  <label
+                    for="compSubtitle-{{i}}"
+                    class="form-label"
+                  >
+                    Subtítulo da Questão
+                  </label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="compSubtitle-{{i}}"
+                    [(ngModel)]="component.subtitle"
+                    name="compSubtitle"
+                    placeholder="Texto de ajuda ou detalhes..."
+                  />
+                </div>
+
+                <!-- Tipo da Questão -->
+                <div class="col-md-4">
+                  <label
+                    for="compType-{{i}}"
+                    class="form-label"
+                  >
+                    Tipo da Questão
+                  </label>
+                  <select
+                    class="form-select"
+                    id="compType-{{i}}"
+                    [(ngModel)]="component.type"
+                    name="compType"
+                  >
+                    <option
+                      *ngFor="let type of formComponentTypes | keyvalue"
+                      [value]="type.value"
+                    >
+                      {{ type.key }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Lista de opções (para radio_list, checkbox_list) -->
+              <div
+                class="p-3 border rounded"
+                *ngIf="['radio_list', 'checkbox_list'].includes(component.type)"
+              >
+                <div class="fw-bold">
+                  Opções da lista
+                </div>
+
+                <!-- Loop para cada opção -->
+                <div class="mt-2" *ngFor="let opt of component.options; let j = index">
+                  <div class="input-group mb-2">
+                    <span class="input-group-text">Opção {{ j+1 }}</span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [value]="opt"
+                      (change)="component.options[j] = $event.target['value']"
+                      name="option"
+                      required
+                      placeholder="Texto da opção..."
+                    />
+                    <button
+                      class="btn btn-danger"
+                      type="button"
+                      (click)="removeOption(component, j)"
+                      title="Remover opção"
+                    >
+                      <i class="ri-delete-bin-line"></i>
+                    </button>
+                  </div>
+                </div>
+                
+                <!-- Botão de adicionar opção -->
+                <button
+                  class="btn btn-primary"
+                  type="button"
+                  (click)="addOption(component)"
+                >
+                  <i class="ri-add-line align-middle"></i>
+                  Adicionar Opção
+                </button>
+              </div>
+            </div>
+
+            <!-- Divisor -->
+            <hr/>
+
+            <!-- Ações do componente (toggles + remover) -->
+            <div class="card-footer d-flex align-items-center justify-content-end">
+              <!-- Exigir Justificativa (mat-slide-toggle → switch do Bootstrap) -->
+              <div class="form-check form-switch me-3">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  id="insertJustification-{{i}}"
+                  [checked]="component.insertJustification"
+                  (change)="component.insertJustification = $event.target['checked']"
+                />
+                <label
+                  class="form-check-label"
+                  for="insertJustification-{{i}}"
+                >
+                  Exigir Justificativa
+                </label>
+              </div>
+
+              <!-- Obrigatório -->
+              <div class="form-check form-switch me-3">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  id="required-{{i}}"
+                  [checked]="component.required"
+                  (change)="component.required = $event.target['checked']"
+                />
+                <label
+                  class="form-check-label"
+                  for="required-{{i}}"
+                >
+                  Obrigatório
+                </label>
+              </div>
+
+              <!-- Botão de excluir componente -->
+              <button
+                class="btn btn-danger"
+                type="button"
+                (click)="removeFormComponent(i)"
+              >
+                <i class="ri-delete-bin-line align-middle"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Rodapé do Card (ações gerais) -->
+    <div class="card-footer d-flex gap-2 justify-content-end">
+      <button
+        class="btn btn-primary"
+        type="button"
+        (click)="saveForm()"
+      >
+        <i class="ri-save-line align-middle"></i>
+        Salvar Formulário
+      </button>
+      <button
+        class="btn btn-success"
+        type="button"
+        (click)="addFormComponent()"
+      >
+        <i class="ri-add-line align-middle"></i>
+        Adicionar Componente
+      </button>
+    </div>
+  </div>
+</div>

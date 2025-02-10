@@ -17,6 +17,12 @@ import { TecnicosComponent } from './tecnicos/tecnicos.component';
 import { CadastroTecnicosComponent } from './tecnicos/cadastro-tecnicos/cadastro-tecnicos.component';
 import { RespTecnicosComponent } from './resp-tecnicos/resp-tecnicos.component';
 import { CadastroResponsaveisTecnicosComponent } from './resp-tecnicos/cadastro-responsaveis-tecnicos/cadastro-responsaveis-tecnicos.component';
+import { FormulariosComponent } from './formularios/formularios.component';
+import { CadastroFormulariosComponent } from './formularios/cadastro-formularios/cadastro-formularios.component';
+import { ExecucoesComponent } from './formularios/execucoes/execucoes.component';
+import { ListagemExecucoesComponent } from './formularios/execucoes/listagem-execucoes/listagem-execucoes.component';
+import { CriarExecucaoComponent } from './formularios/execucoes/criar-execucao/criar-execucao.component';
+import { VerExecucaoComponent } from './formularios/execucoes/ver-execucao/ver-execucao.component';
 
 
 @NgModule({
@@ -33,7 +39,13 @@ import { CadastroResponsaveisTecnicosComponent } from './resp-tecnicos/cadastro-
     CadastroTecnicosComponent,
 
     RespTecnicosComponent,
-     CadastroResponsaveisTecnicosComponent
+    CadastroResponsaveisTecnicosComponent,
+    FormulariosComponent,
+    CadastroFormulariosComponent,
+    ExecucoesComponent,
+    ListagemExecucoesComponent,
+    CriarExecucaoComponent,
+    VerExecucaoComponent
   ],
   imports: [
     CommonModule,
