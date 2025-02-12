@@ -1,3 +1,5 @@
+import { UserRoleEnum } from "src/app/core/models/user.role";
+
 export interface MenuItem {
   id?: number;
   label?: any;
@@ -9,4 +11,6 @@ export interface MenuItem {
   parentId?: number;
   isLayout?: boolean;
   isCollapsed?: any;
+
+  perms?: UserRoleEnum[];
 }

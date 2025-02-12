@@ -1,1 +1,42 @@
-<p>ver-execucao works!</p>
+<!-- Barra de progresso (substitui <mat-progress-bar>) -->
+  <div *ngIf="loading" class="progress mb-3">
+    <div
+      class="progress-bar progress-bar-striped progress-bar-animated w-100"
+      role="progressbar"
+    ></div>
+  </div>
+  
+  <ng-container *ngIf="!loading">
+  
+    <!-- Card principal (substitui <mat-card>) -->
+    <div class="card mb-4">
+      <!-- Cabeçalho do card (substitui <mat-card-header>) -->
+      <div class="card-header">
+        <h5 class="card-title mb-0">
+          Respondido por {{ execution.technician.name }}
+        </h5>
+        <p class="card-subtitle text-muted">
+          Respondido em {{ execution.createdAt | date: 'dd/MM/yyyy HH:mm' }}
+        </p>
+      </div>
+  
+      <!-- Conteúdo do card (substitui <mat-card-content>) -->
+      <div class="card-body">
+        <!-- Se quiser inserir algo extra referente ao "header" aqui -->
+      </div>
+    </div>
+  
+    <!-- Componente que exibe o formulário -->
+    <app-criar-execucao
+      [form]="form"
+      [showNotes]="true"
+      [readOnlyNotes]="user.role !== roles.TECHNICAL_MANAGER"
+      [values]="values"
+      [readOnly]="true"
+      [notes]="notes"
+      [justifications]="justifications"
+      [execId]="execution.id"
+    ></app-criar-execucao>
+  
+  </ng-container>
+  

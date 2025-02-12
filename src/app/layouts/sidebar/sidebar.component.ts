@@ -5,6 +5,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { MENU } from './menu';
 import { MenuItem } from './menu.model';
 import { environment } from 'src/environments/environment';
+import { AuthenticationService } from 'src/app/core/services/auth.service';
+import { IUser } from 'src/app/core/models/user.entity';
 
 @Component({
   selector: 'app-sidebar',
@@ -16,22 +18,50 @@ export class SidebarComponent implements OnInit {
   menu: any;
   toggle: any = true;
   menuItems: MenuItem[] = [];
+  user: IUser;
   @ViewChild('sideMenu') sideMenu!: ElementRef;
   @Output() mobileMenuButtonClicked = new EventEmitter();
 
-  constructor(private router: Router, public translate: TranslateService) {
+  constructor(
+    private router: Router, 
+    public translate: TranslateService,
+    private auth: AuthenticationService
+  ) {
     translate.setDefaultLang('en');
+  }
+
+  filterMenuItems(items: MenuItem[]) {
+    for (const item of items) {
+      if (item.perms && !item.perms.includes(this.user.role)) {
+        items = items.filter(x => x !== item);
+      }
+      if (item.subItems?.length) {
+        item.subItems = this.filterMenuItems([...item.subItems]);
+      }
+    }
+
+    return items;
   }
 
   ngOnInit(): void {
     // Menu Items
-    this.menuItems = MENU;
-    this.router.events.subscribe((event) => {
-      if (document.documentElement.getAttribute('data-layout') != "twocolumn") {
-        if (event instanceof NavigationEnd) {
-          this.initActiveMenu();
+    // this.menuItems = MENU;
+
+
+    this.auth.getLoggedUser().subscribe(user => {
+      this.user = user;
+
+      this.menuItems = this.filterMenuItems(MENU);
+
+      console.log(this.menuItems)
+
+      this.router.events.subscribe((event) => {
+        if (document.documentElement.getAttribute('data-layout') != "twocolumn") {
+          if (event instanceof NavigationEnd) {
+            this.initActiveMenu();
+          }
         }
-      }
+      });
     });
   }
 

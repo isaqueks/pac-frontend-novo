@@ -16,6 +16,8 @@ import { allNotification, messages } from './data'
 import { CartModel } from './topbar.model';
 import { cartData } from './data';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UserRoleEnum } from 'src/app/core/models/user.role';
+import { IUser } from 'src/app/core/models/user.entity';
 
 @Component({
   selector: 'app-topbar',
@@ -32,7 +34,7 @@ export class TopbarComponent implements OnInit {
   valueset: any;
   countryName: any;
   cookieValue: any;
-  userData: any;
+  userData: IUser = {} as any;
   cartData!: CartModel[];
   total = 0;
   cart_length: any = 0;
@@ -42,13 +44,45 @@ export class TopbarComponent implements OnInit {
   isDropdownOpen = false;
   @ViewChild('removenotification') removenotification !: TemplateRef<any>;
   notifyId: any;
+  rolesDict = {
+    [UserRoleEnum.ADMIN]: 'Administrador',
+    [UserRoleEnum.CLIENT]: 'Empresa',
+    [UserRoleEnum.COST_CENTER]: 'Setor',
+    [UserRoleEnum.TECHNICIAN]: 'Técnico',
+    [UserRoleEnum.TECHNICAL_MANAGER]: 'Resp. Técnico'
+  };
 
   constructor(@Inject(DOCUMENT) private document: any, private eventService: EventService, public languageService: LanguageServiceB, private modalService: NgbModal,
     public _cookiesService: CookieService, public translate: TranslateService, private authService: AuthenticationService,
     private router: Router, private TokenStorageService: TokenStorageService) { }
 
+  getUserName() {
+    switch (this.userData?.role) {
+      case UserRoleEnum.ADMIN:
+        return 'Administrador';
+        break;
+      case UserRoleEnum.CLIENT:
+        return this.userData.client.companyName;
+        break;
+      case UserRoleEnum.COST_CENTER:
+        return this.userData.costCenter.companyName;
+        break;
+      case UserRoleEnum.TECHNICIAN:
+        return this.userData.technician.name;
+        break;
+      case UserRoleEnum.TECHNICAL_MANAGER:
+        return this.userData.technicalManager.name;
+        break;
+      default:
+        return '';
+        break;
+    }
+  }
+
   ngOnInit(): void {
-    this.userData = this.TokenStorageService.getUser();
+    this.authService.getLoggedUser().subscribe(user => {
+      this.userData = user;
+    });
     this.element = document.documentElement;
 
     // Cookies wise Language set

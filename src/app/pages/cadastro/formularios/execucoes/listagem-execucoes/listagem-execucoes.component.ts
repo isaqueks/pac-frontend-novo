@@ -58,15 +58,15 @@ export class ListagemExecucoesComponent {
     });
   }
 
-  viewExecution(execution) { 
-    this.router.navigate(['/form/view-execution/', execution.id]);
+  viewExecution(execution) {
+    this.router.navigate(['/cadastro/formularios/ver-execucao/', execution.id]);
   }
 
   delete(id: string): void {
-      this.loading = true;
-      this.service.deleteExecution(id).subscribe(() => {
-          this.fetchData();
-      });
+    this.loading = true;
+    this.service.deleteExecution(id).subscribe(() => {
+      this.fetchData();
+    });
   }
 
 

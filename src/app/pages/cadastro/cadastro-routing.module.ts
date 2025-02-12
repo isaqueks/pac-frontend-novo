@@ -11,6 +11,7 @@ import { CadastroTecnicosComponent } from './tecnicos/cadastro-tecnicos/cadastro
 import { CadastroResponsaveisTecnicosComponent } from './resp-tecnicos/cadastro-responsaveis-tecnicos/cadastro-responsaveis-tecnicos.component';
 import { CadastroFormulariosComponent } from './formularios/cadastro-formularios/cadastro-formularios.component';
 import { ExecucoesComponent } from './formularios/execucoes/execucoes.component';
+import { VerExecucaoComponent } from './formularios/execucoes/ver-execucao/ver-execucao.component';
 
 const routes: Routes = [
   {
@@ -72,6 +73,10 @@ const routes: Routes = [
   {
     path: 'formularios/execucoes/:formId',
     component: ExecucoesComponent
+  },
+  {
+    path: 'formularios/ver-execucao/:execId',
+    component: VerExecucaoComponent
   }
 ];
 
