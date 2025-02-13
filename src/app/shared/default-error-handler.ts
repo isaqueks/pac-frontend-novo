@@ -5,6 +5,7 @@ export const defaultErrorHandler = <T>(successHandler: (d: T) => any) => {
     return {
         next: successHandler,
         error: err => {
+            console.error(err)
             Swal.fire({
                 icon: 'error',
                 title: 'Um erro ocorreu',

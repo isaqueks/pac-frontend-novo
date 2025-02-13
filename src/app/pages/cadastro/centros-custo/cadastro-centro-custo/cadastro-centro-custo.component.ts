@@ -71,14 +71,14 @@ export class CadastroCentroCustoComponent {
 
     if (this.isEditMode) {
       this.costCenterService.update(costCenter).subscribe(() => {
-        // this.snackBar.open('Centro de Custo atualizado com sucesso', 'Fechar', {
+        // this.snackBar.open('Setor atualizado com sucesso', 'Fechar', {
         //   duration: 3000
         // });
         this.router.navigate(['/cost-center']);
       });
     } else {
       this.costCenterService.create(costCenter).subscribe(() => {
-        // this.snackBar.open('Centro de Custo criado com sucesso', 'Fechar', {
+        // this.snackBar.open('Setor criado com sucesso', 'Fechar', {
         //   duration: 3000
         // });
         this.router.navigate(['/cost-center']);
