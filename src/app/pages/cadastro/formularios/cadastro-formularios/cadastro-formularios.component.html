@@ -154,11 +154,53 @@
               </div>
             </div>
 
-            <!-- Divisor -->
-            <hr/>
+            
+            <div *ngIf="component.type === 'number'">
+              <hr class="my-0">
+              <div class="row p-3">
+                <!-- Subtítulo -->
+                <div class="col-md-6">
+                  <label
+                    for="def-compSubtitle-{{i}}"
+                    class="form-label"
+                  >
+                    Valor mínimo
+                  </label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="def-compSubtitle-{{i}}"
+                    [(ngModel)]="component.minValue"
+                    placeholder="Valor mínimo padrão"
+                  />
+                </div>
+
+                <div class="col-md-6">
+                  <label
+                    for="def-compSubtitle-{{i}}"
+                    class="form-label"
+                  >
+                    Valor máximo
+                  </label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="def-compSubtitle-{{i}}"
+                    [(ngModel)]="component.maxValue"
+                    placeholder="Valor máximo padrão"
+                  />
+                </div>
+              </div>
+            </div>
 
             <!-- Ações do componente (toggles + remover) -->
             <div class="card-footer d-flex align-items-center justify-content-end">
+<!-- 
+              <div class="justify-content-start me-auto">
+                teste
+              </div>
+ -->
+
               <!-- Exigir Justificativa (mat-slide-toggle → switch do Bootstrap) -->
               <div class="form-check form-switch me-3">
                 <input

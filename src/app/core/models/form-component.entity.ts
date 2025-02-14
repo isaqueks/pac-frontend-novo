@@ -14,10 +14,18 @@ export interface IFormComponent extends IBaseEntity {
     id: string;
     title: string;
     subtitle?: string;
+
     type: FormComponentType;
     required: boolean;
     insertJustification: boolean;
+    
     form: IForm;
     formId: string;
     options: string[];
+
+    maxValue?: number;
+    minValue?: number;
+
+    radioListTrueValue?: string;
+    checkboxListTrueValueIndex?: number;
 }
