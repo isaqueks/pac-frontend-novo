@@ -53,26 +53,30 @@ export class SidebarComponent implements OnInit {
 
       this.menuItems = this.filterMenuItems(MENU);
 
-      console.log(this.menuItems)
+      setTimeout(() => {
+        this.initActiveMenu();
+      }, 0);
 
       this.router.events.subscribe((event) => {
         if (document.documentElement.getAttribute('data-layout') != "twocolumn") {
           if (event instanceof NavigationEnd) {
-            this.initActiveMenu();
+            setTimeout(() => {
+              this.initActiveMenu();
+            }, 0);
           }
         }
       });
     });
   }
 
-  /***
-   * Activate droup down set
-   */
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.initActiveMenu();
-    }, 0);
-  }
+  // /***
+  //  * Activate droup down set
+  //  */
+  // ngAfterViewInit() {
+  //   setTimeout(() => {
+  //     this.initActiveMenu();
+  //   }, 0);
+  // }
 
   removeActivation(items: any) {
     items.forEach((item: any) => {
@@ -170,13 +174,9 @@ export class SidebarComponent implements OnInit {
 
   initActiveMenu() {
     let pathName = window.location.pathname;
-    // Check if the application is running in production
-    if (environment.production) {
-      // Modify pathName for production build
-      pathName = pathName.replace('/velzon/angular/corporate', '');
-    }
 
     const active = this.findMenuItem(pathName, this.menuItems)
+    console.log(active)
     this.toggleItem(active)
     const ul = document.getElementById("navbar-nav");
     if (ul) {
@@ -185,15 +185,9 @@ export class SidebarComponent implements OnInit {
       this.removeActivation(activeItems);
 
       let matchingMenuItem = items.find((x: any) => {
-        if (environment.production) {
-          let path = x.pathname
-          path = path.replace('/velzon/angular/corporate', '');
-          return path === pathName;
-        } else {
-          return x.pathname === pathName;
-        }
-
+        return x.pathname.length > 1 && (x.pathname.startsWith(pathName) || pathName.startsWith(x.pathname)) || x.pathname === pathName;
       });
+      console.log(matchingMenuItem)
       if (matchingMenuItem) {
         this.activateParentDropdown(matchingMenuItem);
       }
@@ -201,8 +195,13 @@ export class SidebarComponent implements OnInit {
   }
 
   private findMenuItem(pathname: string, menuItems: any[]): any {
+
+    menuItems = menuItems.sort((a, b) => {
+      return (a.link || "").length - (b.link || "").length;
+    });
+
     for (const menuItem of menuItems) {
-      if (menuItem.link && menuItem.link === pathname) {
+      if (menuItem.link && (menuItem.link.length > 1 && (menuItem.link.startsWith(pathname) || pathname.startsWith(menuItem.link) || pathname === menuItem.link))) {
         return menuItem;
       }
 

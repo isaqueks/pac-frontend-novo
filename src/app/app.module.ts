@@ -40,7 +40,6 @@ import { ApikeyEffects } from './store/APIKey/apikey_effect';
 import { registerLocaleData } from '@angular/common';
 import localeBr from '@angular/common/locales/pt';
 
-
 export function createTranslateLoader(http: HttpClient): any {
   return new TranslateHttpLoader(http, window.location.origin + '/assets/i18n/', '.json');
 }
@@ -54,7 +53,7 @@ if (environment.defaultauth === 'firebase') {
 registerLocaleData(localeBr, 'pt');
 
 @NgModule({ declarations: [
-        AppComponent
+        AppComponent,
     ],
     bootstrap: [AppComponent], 
     imports: [

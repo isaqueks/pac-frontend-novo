@@ -48,7 +48,7 @@
                 <tr>
                   <td><ngb-highlight [result]="data.user.email" [term]="search"></ngb-highlight></td>
                   <td><ngb-highlight [result]="data.name" [term]="search"></ngb-highlight></td>
-                  <td><ngb-highlight [result]="data.phone" [term]="search"></ngb-highlight></td>
+                  <td><ngb-highlight [result]="data.phone | phone" [term]="search"></ngb-highlight></td>
                   <td><ngb-highlight [result]="data.document| cpfCnpj" [term]="search"></ngb-highlight></td>
                   <td><ngb-highlight [result]="data.costCenter.companyName" [term]="search"></ngb-highlight></td>
 

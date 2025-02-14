@@ -12,17 +12,18 @@
     <div class="card mb-4">
       <!-- Cabeçalho do card (substitui <mat-card-header>) -->
       <div class="card-header">
-        <h5 class="card-title mb-0">
-          Respondido por {{ execution.technician.name }}
-        </h5>
-        <p class="card-subtitle text-muted">
-          Respondido em {{ execution.createdAt | date: 'dd/MM/yyyy HH:mm' }}
-        </p>
+        <h1 class="card-title h3">
+          Formulário {{form.title}}
+        </h1>
       </div>
   
       <!-- Conteúdo do card (substitui <mat-card-content>) -->
       <div class="card-body">
         <!-- Se quiser inserir algo extra referente ao "header" aqui -->
+        <p class="card-subtitle text-muted">
+          Respondido por {{ execution.technician.name }} <br>
+          Respondido em {{ execution.createdAt | date: 'dd/MM/yyyy HH:mm' }}
+        </p>
       </div>
     </div>
   

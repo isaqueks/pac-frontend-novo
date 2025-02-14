@@ -132,7 +132,7 @@ export class CriarExecucaoComponent {
         pending--;
         if (pending === 0) {
           this.loading = false;
-          this.router.navigate(['/form']);
+          this.router.navigate(['/cadastro/formularios']);
         }
       }));
     });
