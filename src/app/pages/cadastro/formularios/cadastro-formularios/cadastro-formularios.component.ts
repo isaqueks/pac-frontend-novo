@@ -94,4 +94,28 @@ export class CadastroFormulariosComponent {
   removeOption(formComponent: IFormComponent, index: number): void {
     formComponent.options.splice(index, 1);
   }
+
+  isDefaultOption(component: IFormComponent, j: number) {
+    // if (![FormComponentType.CHECKBOX_LIST, FormComponentType.RADIO_LIST].includes(component.type)) {
+    //   return false;
+    // }
+
+    if (component.type === FormComponentType.CHECKBOX_LIST) {
+      return component.checkboxListTrueValueIndex === j;
+    }
+    if (component.type === FormComponentType.RADIO_LIST) {
+      return component.radioListTrueValue === component.options[j];
+    }
+
+    return false;
+  }
+
+  setDefaultOption(component: IFormComponent, j: number) {
+    if (component.type === FormComponentType.CHECKBOX_LIST) {
+      component.checkboxListTrueValueIndex = j;
+    }
+    if (component.type === FormComponentType.RADIO_LIST) {
+      component.radioListTrueValue = component.options[j];
+    }
+  }
 }

@@ -114,7 +114,7 @@ export class CriarExecucaoComponent {
       }));
 
       this.formService.execute(this.form.id, user.technician?.id, values).subscribe(defaultErrorHandler((exec) => {
-        this.router.navigate(['/form/view-execution', exec.id]);
+        this.router.navigate(['/cadastro/formularios/ver-execucao', exec.id]);
         this.loading = false;
       }));
     }));

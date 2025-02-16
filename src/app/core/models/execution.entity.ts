@@ -5,6 +5,7 @@ import { ITechnicalManager } from "./technical-maneger.entity";
 
 export interface IFormExecution extends IBaseEntity {
 
+    accordingly: boolean;
     technicianId: string; 
     technician?: ITechnician;
     formId: string;

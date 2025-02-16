@@ -10,6 +10,9 @@
               <div class="row">
                 <div class="col">
                   <h4 class="card-title flex-grow-1 mb-2">
+                    Formulário: {{form?.title}}
+                  </h4>
+                  <h4 class="card-title flex-grow-1 mb-2">
                     Listagem de respostas
                   </h4>
                 </div>
@@ -34,8 +37,9 @@
               <table class="table table-gridjs">
                 <thead>
                 <tr>
-                  <th class="sort">Técnico</th>
+                  <th class="sort">Respondido por</th>
                   <th class="sort">Respondido em</th>
+                  <th class="sort">Está nos conformes</th>
                   <th>Ações</th>
                 </tr>
                 </thead>
@@ -44,6 +48,7 @@
                 <tr>
                   <td><ngb-highlight [result]="data.technician.name" [term]="search"></ngb-highlight></td>
                   <td><ngb-highlight [result]="data.createdAt | date" [term]="search"></ngb-highlight></td>
+                  <td><ngb-highlight [result]="data.accordingly ? 'Sim' : 'Não'" [term]="search"></ngb-highlight></td>
 
                   <td data-column-id="actions" class="gridjs-td">
                     <div class="d-flex gap-2">
