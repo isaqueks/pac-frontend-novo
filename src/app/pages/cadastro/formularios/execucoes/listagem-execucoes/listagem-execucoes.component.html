@@ -32,14 +32,35 @@
             <div class="progress" *ngIf="loading">
               <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"></div>
             </div>&nbsp;
-          
+
+            <div>
+              <div class="form-check form-switch me-3">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  [(ngModel)]="showValues"
+                />
+                <label
+                  class="form-check-label"
+                >
+                  Exibir valores respondidos
+                </label>
+              </div>
+            </div>
+
             <div class="table-responsive mt-1">
               <table class="table table-gridjs">
                 <thead>
                 <tr>
                   <th class="sort">Respondido por</th>
                   <th class="sort">Respondido em</th>
-                  <th class="sort">Está nos conformes</th>
+                  <th class="sort">Está nos conformes?</th>
+                  @if (showValues) {
+                    @for (component of form.components; track component.id) {
+                      <th class="sort bg-primary text-light">{{component.title}}</th>
+                    }
+                  }
                   <th>Ações</th>
                 </tr>
                 </thead>
@@ -48,7 +69,22 @@
                 <tr>
                   <td><ngb-highlight [result]="data.technician.name" [term]="search"></ngb-highlight></td>
                   <td><ngb-highlight [result]="data.createdAt | date" [term]="search"></ngb-highlight></td>
-                  <td><ngb-highlight [result]="data.accordingly ? 'Sim' : 'Não'" [term]="search"></ngb-highlight></td>
+                  <td>
+                    <span class="badge" style="font-size: 1em;" [ngClass]="{'bg-success': data.accordingly, 'bg-danger': !data.accordingly}">
+                      <ngb-highlight [result]="data.accordingly ? 'Sim' : 'Não'" [term]="search"></ngb-highlight>
+                    </span>
+                  </td>
+
+                  @if (showValues) {
+                    @for (component of form.components; track component.id) {
+                      <td>
+                        {{getExecutionDisplay(component, data)}}
+                        @if (!getExecutionValue(component, data).accordingly) {
+                          <span class="badge bg-danger">!</span>
+                        }
+                      </td>
+                    }
+                  }
 
                   <td data-column-id="actions" class="gridjs-td">
                     <div class="d-flex gap-2">

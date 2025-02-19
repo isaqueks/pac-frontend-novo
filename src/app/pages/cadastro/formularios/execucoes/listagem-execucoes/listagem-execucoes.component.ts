@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ICostCenter } from 'src/app/core/models/cost-center.entity';
 import { IFormExecution } from 'src/app/core/models/execution.entity';
+import { FormComponentType, IFormComponent } from 'src/app/core/models/form-component.entity';
 import { IForm } from 'src/app/core/models/form.entity';
 import { PaginationService } from 'src/app/core/services/pagination.service';
 import { FormService } from 'src/app/shared/services/form.service';
@@ -33,6 +34,7 @@ export class ListagemExecucoesComponent {
   items: IFormExecution[] = [];
 
   loading: boolean = true;
+  showValues: boolean = false;
 
   constructor(
     private modalService: NgbModal,
@@ -41,6 +43,25 @@ export class ListagemExecucoesComponent {
     private router: Router
   ) {
 
+  }
+
+  getExecutionValue(component: IFormComponent, exec: IFormExecution) {
+    return exec.executionValues.find(v => v.formComponentId === component.id);
+  }
+
+  getExecutionDisplay(component: IFormComponent, exec: IFormExecution): string {
+    const execVal = exec.executionValues.find(v => v.formComponentId === component.id);
+    const value = execVal.value;
+    if (!value) {
+      return '';
+    }
+
+    if (component.type === FormComponentType.CHECKBOX_LIST) {
+      const trueValues = value.split(';').map(x => x === 'true');
+      return component.options.filter((_, i) => trueValues[i]).join(', ');
+    }
+
+    return value;
   }
 
   ngOnInit(): void {
