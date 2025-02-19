@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ICostCenter } from 'src/app/core/models/cost-center.entity';
 import { ITechnicalManager } from 'src/app/core/models/technical-maneger.entity';
 import { PaginationService } from 'src/app/core/services/pagination.service';
+import { defaultErrorHandler } from 'src/app/shared/default-error-handler';
 import { TechnicianManagerService } from 'src/app/shared/services/technician-manager.service';
 
 @Component({
@@ -46,13 +47,13 @@ export class RespTecnicosComponent {
   fetchData(selectedCostCenterId: string): void {
     this.selectedCostCenterId = selectedCostCenterId;
     this.loading = true;
-    this.service.getAllByCostCenter(selectedCostCenterId).subscribe((items: ITechnicalManager[]) => {
+    this.service.getAllByCostCenter(selectedCostCenterId).subscribe(defaultErrorHandler((items: ITechnicalManager[]) => {
       this.items = items;
 
       this.pageSize = items.length;
       this.total = items.length;
       this.loading = false;
-    });
+    }));
   }
 
   onCostCenterChange(cc: ICostCenter): void {
@@ -66,8 +67,8 @@ export class RespTecnicosComponent {
 
   delete(id: string): void {
     this.loading = true;
-    this.service.delete(id).subscribe(() => {
+    this.service.delete(id).subscribe(defaultErrorHandler(() => {
       this.fetchData(this.selectedCostCenterId);
-    });
+    }));
   }
 }

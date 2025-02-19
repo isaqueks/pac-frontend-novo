@@ -34,7 +34,7 @@ export class ListagemExecucoesComponent {
   items: IFormExecution[] = [];
 
   loading: boolean = true;
-  showValues: boolean = false;
+  showValues: boolean = true;
 
   constructor(
     private modalService: NgbModal,
