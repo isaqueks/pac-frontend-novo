@@ -47,28 +47,34 @@ export class FormService implements IEntityService<IForm> {
     }
 
     uploadFile(formId: string, file: File) {
-        return this.http.get<any>(`/executions/s3/upload-url`, {
-            params: {
-                formId,
-                ext: file.name.split('.').pop()
-            }
-        }).pipe(switchMap(res => {
-            const { url, location } = res;
-            // upload to s3 presigned url
+        console.log({formId, file})
+        const fd = new FormData();
+        fd.set('file', file);
+        return this.http.post<{ filename: string }>(`/executions/upload-file`, 
+            fd
+        );
+        // return this.http.get<any>(`/executions/s3/upload-url`, {
+        //     params: {
+        //         formId,
+        //         ext: file.name.split('.').pop()
+        //     }
+        // }).pipe(switchMap(res => {
+        //     const { url, location } = res;
+        //     // upload to s3 presigned url
             
-            return new Observable(subscriber => {
-                fetch(url, {
-                    method: 'PUT',
-                    body: file,
-                    headers: {
-                        'Content-Type': file.type
-                    }
-                })
-                .then(res => subscriber.next(location))
-                .catch(err => subscriber.error(err))
-                .finally(() => subscriber.complete());
-            });
-        }))
+        //     return new Observable(subscriber => {
+        //         fetch(url, {
+        //             method: 'PUT',
+        //             body: file,
+        //             headers: {
+        //                 'Content-Type': file.type
+        //             }
+        //         })
+        //         .then(res => subscriber.next(location))
+        //         .catch(err => subscriber.error(err))
+        //         .finally(() => subscriber.complete());
+        //     });
+        // }))
     }
 
     getExecutions(formId: string): Observable<IFormExecution[]> {
@@ -85,5 +91,9 @@ export class FormService implements IEntityService<IForm> {
 
     setNote(execId: string, execValId: string, note: string, accordingly: boolean): Observable<any> {
         return this.http.patch<void>(`/executions/${execId}/values/${execValId}/notes`, { note, accordingly: String(!!accordingly) });
+    }
+
+    downloadFile(fileId: string): Observable<Blob> {
+        return this.http.get(`/executions/files/${fileId}`, { responseType: 'blob' });
     }
 }

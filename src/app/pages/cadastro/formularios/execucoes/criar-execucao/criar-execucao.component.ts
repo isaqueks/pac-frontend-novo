@@ -101,6 +101,7 @@ export class CriarExecucaoComponent {
         if (v instanceof FileList) {
           v = await Promise.all(Array.from(v).map(file => {
             return this.formService.uploadFile(this.form.id, file).toPromise()
+            .then(res => res.filename)
           }))
         }
 
@@ -140,14 +141,21 @@ export class CriarExecucaoComponent {
   }
 
 
-  download(url) {
+  download(url, btn: HTMLButtonElement) {
     // download with fetch
-    fetch(url).then(res => res.blob()).then(blob => {
+    btn.disabled = true;
+    this.formService.downloadFile(url)
+    .subscribe(defaultErrorHandler(blob => {
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
       a.download = url.split('/').pop();
       a.click();
-    });
+      
+      setTimeout(() => {
+        btn.disabled = false;
+        URL.revokeObjectURL(a.href);
+      }, 1000);
+    }));
   }
 
 }
