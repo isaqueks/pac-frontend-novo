@@ -67,7 +67,11 @@
                 <tbody>
                   @for(data of items;track $index){
                 <tr>
-                  <td><ngb-highlight [result]="data.technician.name" [term]="search"></ngb-highlight></td>
+                  <td>
+                    <a [routerLink]="['/cadastro/tecnicos/', data.technicianId]" href="#">
+                      <ngb-highlight [result]="data.technician.name" [term]="search"></ngb-highlight>
+                    </a>
+                  </td>
                   <td><ngb-highlight [result]="data.createdAt | date" [term]="search"></ngb-highlight></td>
                   <td>
                     <span class="badge" style="font-size: 1em;" [ngClass]="{'bg-success': data.accordingly, 'bg-danger': !data.accordingly}">
@@ -78,7 +82,23 @@
                   @if (showValues) {
                     @for (component of form.components; track component.id) {
                       <td>
-                        {{getExecutionDisplay(component, data)}}
+                        @if (component.type === 'upload') {
+                          <span
+                            class="ld-flex align-items-center"
+                          >
+                            <button
+                              class="btn btn-primary btn-sm me-2"
+                              #btn
+                              (click)="download(getExecutionValue(component, data).value, btn)"
+                            >
+                              <i class="ri-download-line align-middle"></i>
+                            </button>
+                            <span>{{getExecutionDisplay(component, data)}}</span>
+                          </span>
+                        }
+                        @else {
+                          {{getExecutionDisplay(component, data)}}
+                        }
                         @if (!getExecutionValue(component, data).accordingly) {
                           <span class="text-danger">
                             <i class="ri-error-warning-fill"></i>

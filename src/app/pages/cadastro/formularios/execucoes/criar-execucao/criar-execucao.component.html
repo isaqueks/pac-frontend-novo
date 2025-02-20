@@ -256,12 +256,13 @@
               *ngIf="!readOnly"
               class="btn btn-primary me-2"
               type="button"
+              [disabled]="loading"
               (click)="submit()"
             >
               Enviar Respostas
             </button>
             <button
-              [disabled]="!notesChanged()"
+              [disabled]="!notesChanged() || loading"
               *ngIf="showNotes && !readOnlyNotes"
               class="btn btn-primary"
               type="button"

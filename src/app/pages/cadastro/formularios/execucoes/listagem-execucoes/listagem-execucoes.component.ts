@@ -6,6 +6,7 @@ import { IFormExecution } from 'src/app/core/models/execution.entity';
 import { FormComponentType, IFormComponent } from 'src/app/core/models/form-component.entity';
 import { IForm } from 'src/app/core/models/form.entity';
 import { PaginationService } from 'src/app/core/services/pagination.service';
+import { defaultErrorHandler } from 'src/app/shared/default-error-handler';
 import { FormService } from 'src/app/shared/services/form.service';
 
 @Component({
@@ -89,6 +90,23 @@ export class ListagemExecucoesComponent {
       this.fetchData();
     });
   }
+
+  download(url, btn: HTMLButtonElement) {
+      // download with fetch
+      btn.disabled = true;
+      this.service.downloadFile(url)
+      .subscribe(defaultErrorHandler(blob => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = url.split('/').pop();
+        a.click();
+        
+        setTimeout(() => {
+          btn.disabled = false;
+          URL.revokeObjectURL(a.href);
+        }, 1000);
+      }));
+    }
 
 
 }
