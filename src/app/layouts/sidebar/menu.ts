@@ -13,6 +13,10 @@ export const MENU: MenuItem[] = [
         label: 'Dashboard',
         link: '/',
       },
+      {
+        label: 'Monitoramento',
+        link: '/relatorios/monitoramento',
+      },
     ],
     isCollapsed: false
   },

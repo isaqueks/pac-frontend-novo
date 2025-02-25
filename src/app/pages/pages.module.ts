@@ -36,7 +36,7 @@ import { EcommerceModule } from "./ecommerce/ecommerce.module";
 @NgModule({
   declarations: [
     DashboardComponent,
-    ToastsContainer
+    ToastsContainer,
   ],
   imports: [
     CommonModule,
