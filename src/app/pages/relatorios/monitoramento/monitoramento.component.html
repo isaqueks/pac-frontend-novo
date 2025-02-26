@@ -12,21 +12,33 @@
                   <h4 class="card-title flex-grow-1 mb-2">
                     Inconformidades por Setor
                   </h4>
+                  <client-select class="h-[50px] ml-3" (valueChange)="onClientChange($event)"></client-select>
                 </div>
-                <!-- <div class="col">
-                  <div class="float-end">
-                    <a href="/cadastro/setores/cadastrar" class="btn btn-primary waves-effect waves-light">
-                      <i class="ri-add-line align-middle me-2"></i> Cadastrar Setor
-                    </a>
-                  </div>
-                </div> -->
+                <div class="col">
+                  &nbsp;
+                </div>
               </div>
             </div>
           </div>
 
           <div class="card-body">
-
-           
+            @if (loading) {
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Carregando...</span>
+              </div>
+            }
+            @else {
+              <div class="d-flex flex-wrap gap-2">
+                @for (item of reportData; track item.id) {
+                  <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                      <h5 class="card-title">{{item.companyName}}</h5>
+                      <p class="card-text">Inconformidades: {{getInconformityCount(item)}}</p>
+                    </div>
+                  </div>
+                }
+              </div>
+            }
           </div><!-- end card-body -->
       </div><!-- end card -->
   </div>

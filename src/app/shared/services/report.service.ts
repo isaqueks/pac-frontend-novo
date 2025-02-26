@@ -12,8 +12,8 @@ export class ReportService {
     private http: HttpClient
   ) { }
 
-  executionsNotAccordinglyByClient(costCenterId: string): Observable<IReportByClient> {
-    return this.http.get<IReportByClient>(`/reports/cost-centers-with-executions?clientId=${costCenterId}`);
+  getExecutionsNotAccordinglyByClient(costCenterId: string): Observable<IReportByClient[]> {
+    return this.http.get<IReportByClient[]>(`/reports/cost-centers-with-executions?clientId=${costCenterId}`);
   }
 
 }

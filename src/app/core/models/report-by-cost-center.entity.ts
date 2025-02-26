@@ -3,8 +3,8 @@ import { IFormExecution } from "./execution.entity";
 import { IForm } from "./form.entity";
 
 
-export type IReportByClient = Array<ICostCenter & {
+export type IReportByClient = ICostCenter & {
   forms: Array<IForm & {
     executions: (IFormExecution & { accordingly: false })[];
   }>
-}>;
+};
