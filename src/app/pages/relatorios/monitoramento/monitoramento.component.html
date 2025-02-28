@@ -30,10 +30,15 @@
             @else {
               <div class="d-flex flex-wrap gap-2">
                 @for (item of reportData; track item.id) {
-                  <div class="card" style="width: 18rem;">
+                  <div class="card" style="width: 15rem;">
                     <div class="card-body">
                       <h5 class="card-title">{{item.companyName}}</h5>
-                      <p class="card-text">Inconformidades: {{getInconformityCount(item)}}</p>
+                      <p class="card-text text-info">{{item.cnpj | cpfCnpj}}</p>
+                      <div class="card-text">
+                        <button type="button" class="btn btn-secondary">
+                          Inconformidades <span class="badge bg-dark">{{getInconformityCount(item)}}</span>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 }
