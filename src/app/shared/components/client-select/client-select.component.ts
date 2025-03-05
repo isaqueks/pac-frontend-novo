@@ -15,7 +15,7 @@ export class ClientSelectComponent implements OnInit {
 
     @Output() valueChange: EventEmitter<IClient> = new EventEmitter<IClient>();
     @Input() value: IClient;
-    @Input() label: string = 'Selecionar Cliente';
+    @Input() label: string = 'Cliente';
     @Input() readOnly: boolean = false;
 
     clients: IClient[] = [];
@@ -56,6 +56,7 @@ export class ClientSelectComponent implements OnInit {
                 this.clients = [client];
                 this.selectClient({ target: { value: client.id } });
                 this.loading = false;
+                this.readOnly = true;
             }
             else if (user.role === UserRoleEnum.COST_CENTER) {
                 this.cc.getById(user.costCenter.clientId).subscribe(costCenter => {
@@ -63,6 +64,7 @@ export class ClientSelectComponent implements OnInit {
                     this.clients = [client];
                     this.selectClient({ target: { value: client.id } });
                     this.loading = false;
+                    this.readOnly = true;
                 });
             }
             else {

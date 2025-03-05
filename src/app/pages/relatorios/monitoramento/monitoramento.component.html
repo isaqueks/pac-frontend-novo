@@ -52,7 +52,11 @@
 						<app-breadcrumbs title="Inconformidades no setor {{selectedSector()?.companyName}}" [breadcrumbItems]="[
 							{ label: currClient?.companyName},
 							{ label: selectedSector()?.companyName, active: true }
-						]"></app-breadcrumbs>
+						]">
+								<a href="javascript:void(0)" class="fs-22 cursor-hover" style="vertical-align: middle;" (click)="selectClient(currClient)">
+									<i class="bx bx-left-arrow-alt"></i>
+								</a>
+						</app-breadcrumbs>
 						<div class="d-flex flex-wrap gap-2">
 							@for (form of selectedSector()?.forms; track form.id) {
 							<div class="card" style="width: 15rem;">
@@ -74,7 +78,11 @@
 							{ label: currClient?.companyName},
 							{ label: selectedSector()?.companyName },
 							{ label: selectedForm()?.title, active: true }
-						]"></app-breadcrumbs>
+						]">
+							<a href="javascript:void(0)" class="fs-22 cursor-hover" style="vertical-align: middle;" (click)="selectCostCenter(selectedSector())">
+								<i class="bx bx-left-arrow-alt"></i>
+							</a>	
+						</app-breadcrumbs>
 						<app-execution-table-list [items]="selectedForm()?.executions" [form]="selectedForm()" [deleteAllowed]="false"></app-execution-table-list>
 					}
 				}

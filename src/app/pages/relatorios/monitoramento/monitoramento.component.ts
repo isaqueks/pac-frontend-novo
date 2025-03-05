@@ -39,6 +39,12 @@ export class MonitoramentoComponent {
     private reportService: ReportService
   ) {}
 
+  selectClient(client: IClient) {
+    this.currClient = client;
+    this.selectedClientId.set(client.id);
+    this.viewMode = 'client';
+  }
+
   selectCostCenter(costCenter: IReportByClient) {
     this.selectedSectorId.set(costCenter.id);
     this.viewMode = 'sector';
@@ -60,9 +66,7 @@ export class MonitoramentoComponent {
   }
 
   onClientChange(client: IClient) {
-    this.currClient = client;
-    this.viewMode = 'client';
-    this.selectedClientId.set(client.id);
+    this.selectClient(client);
     this.selectedSectorId.set(null);
     this.selectedFormId.set(null);
     this.fetchReportData();

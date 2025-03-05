@@ -12,7 +12,7 @@ import { TokenStorageService } from '../../core/services/token-storage.service';
 import { CookieService } from 'ngx-cookie-service';
 import { LanguageServiceB } from '../../core/services/language.service';
 import { TranslateService } from '@ngx-translate/core';
-import { allNotification, messages } from './data'
+// import { allNotification, messages } from './data'
 import { CartModel } from './topbar.model';
 import { cartData } from './data';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -20,6 +20,8 @@ import { UserRoleEnum } from 'src/app/core/models/user.role';
 import { IUser } from 'src/app/core/models/user.entity';
 import { MENU } from '../sidebar/menu';
 import { MenuItem } from '../sidebar/menu.model';
+import { FormService } from 'src/app/shared/services/form.service';
+import { ReportService } from 'src/app/shared/services/report.service';
 
 @Component({
   selector: 'app-topbar',
@@ -56,7 +58,8 @@ export class TopbarComponent implements OnInit {
 
   constructor(@Inject(DOCUMENT) private document: any, private eventService: EventService, public languageService: LanguageServiceB, private modalService: NgbModal,
     public _cookiesService: CookieService, public translate: TranslateService, private authService: AuthenticationService,
-    private router: Router, private TokenStorageService: TokenStorageService) { }
+    private router: Router, private TokenStorageService: TokenStorageService, private reportService: ReportService
+  ) { }
 
   getUserName() {
     switch (this.userData?.role) {
@@ -98,15 +101,43 @@ export class TopbarComponent implements OnInit {
     }
 
     // Fetch Data
-    this.allnotifications = allNotification;
+    // this.allnotifications = allNotification;
 
-    this.messages = messages;
+    // this.messages = messages;
     this.cartData = cartData;
     this.cart_length = this.cartData.length;
     this.cartData.forEach((item) => {
       var item_price = item.quantity * item.price
       this.total += item_price
     });
+
+    this.fetchNotificationData();
+  }
+
+  fetchNotificationData() {
+    this.authService.getLoggedUser().subscribe(user => {
+      if (user.role !== UserRoleEnum.CLIENT) {
+        return;
+      }
+
+      this.reportService.getExecutionsNotAccordinglyByClient(user.client.id)
+      .subscribe(data => {
+        this.allnotifications = data.map(report => {
+          const inconform = report.forms.reduce((acc, form) => {
+            return acc + form.executions.length;
+          }, 0);
+
+          return {
+            id: report.id,
+            desc: report.companyName,
+            icon: "bx-error-circle",
+            time: `${inconform} inconformidades`,
+            checkboxId: "all-notification-check01",
+            state: false
+          }
+        })
+      });
+    })
   }
 
   /**
