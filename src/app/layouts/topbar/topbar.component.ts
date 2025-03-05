@@ -18,6 +18,8 @@ import { cartData } from './data';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserRoleEnum } from 'src/app/core/models/user.role';
 import { IUser } from 'src/app/core/models/user.entity';
+import { MENU } from '../sidebar/menu';
+import { MenuItem } from '../sidebar/menu.model';
 
 @Component({
   selector: 'app-topbar',
@@ -241,19 +243,22 @@ export class TopbarComponent implements OnInit {
       this.isDropdownOpen = true;
     }
   }
+
+  menuData: MenuItem[] = MENU.map(item => item.subItems).flat();
+
   // Search Topbar
   Search() {
     var searchOptions = document.getElementById("search-close-options") as HTMLAreaElement;
     var dropdown = document.getElementById("search-dropdown") as HTMLAreaElement;
     var input: any, filter: any, ul: any, li: any, a: any | undefined, i: any, txtValue: any;
     input = document.getElementById("search-options") as HTMLAreaElement;
-    filter = input.value.toUpperCase();
+    filter = input.value.toLowerCase();
     var inputLength = filter.length;
 
     if (inputLength > 0) {
       dropdown.classList.add("show");
       searchOptions.classList.remove("d-none");
-      var inputVal = input.value.toUpperCase();
+      var inputVal = input.value.toLowerCase();
       var notifyItem = document.getElementsByClassName("notify-item");
 
       Array.from(notifyItem).forEach(function (element: any) {
@@ -269,8 +274,9 @@ export class TopbarComponent implements OnInit {
         } else if (element.getElementsByTagName("span")) {
           notifiTxt = element.getElementsByTagName("span")[0].innerText.toLowerCase()
         }
-        if (notifiTxt)
+        if (notifiTxt) {
           element.style.display = notifiTxt.includes(inputVal) ? "block" : "none";
+        }
 
       });
     } else {
