@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgbNavModule, NgbAccordionModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNavModule, NgbAccordionModule, NgbDropdownModule, NgbPaginationModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 
 // Swiper Slider
 import { SlickCarouselModule } from 'ngx-slick-carousel';
@@ -50,6 +50,8 @@ import { CpfCnpjPipe } from './cpf-cnpj.pipe';
 import { ClientSelectComponent } from './components/client-select/client-select.component';
 import { CostCenterSelectComponent } from './components/cost-center-select/cost-center-select.component';
 import { PhonePipe } from './pipes/phone.pipe';
+import { ExecutionTableListComponent } from './components/execution-table-list/execution-table-list.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -86,7 +88,8 @@ import { PhonePipe } from './pipes/phone.pipe';
     CpfCnpjPipe,
     PhonePipe,
     ClientSelectComponent,
-    CostCenterSelectComponent
+    CostCenterSelectComponent,
+    ExecutionTableListComponent
   ],
   imports: [
     CommonModule,
@@ -95,7 +98,11 @@ import { PhonePipe } from './pipes/phone.pipe';
     NgbDropdownModule,
     SlickCarouselModule,
     CountUpModule,
-    NgxMaskDirective
+    NgxMaskDirective,
+    NgbDropdownModule,
+    NgbPaginationModule,
+    NgbTypeaheadModule,
+    RouterModule
   ],
   providers: [
     ClientService,
@@ -110,7 +117,7 @@ import { PhonePipe } from './pipes/phone.pipe';
   exports: [
     BreadcrumbsComponent, ClientLogoComponent, ServicesComponent, CollectionComponent, CtaComponent, DesignedComponent, PlanComponent, FaqsComponent,LandingScrollspyDirective, ReviewComponent, CounterComponent, WorkProcessComponent, TeamComponent, ContactComponent, FooterComponent, ScrollspyDirective,
     WalletComponent, MarketPlaceComponent, FeaturesComponent, CategoriesComponent, DiscoverComponent, TopCreatorComponent, ProcessComponent, FindjobsComponent, CandidatesComponent, BlogComponent, JobcategoriesComponent, JobFooterComponent,
-    NgxMaskDirective, CpfCnpjPipe, PhonePipe, ClientSelectComponent, CostCenterSelectComponent
+    NgxMaskDirective, CpfCnpjPipe, PhonePipe, ClientSelectComponent, CostCenterSelectComponent, ExecutionTableListComponent
   ]
 })
 export class SharedModule { }

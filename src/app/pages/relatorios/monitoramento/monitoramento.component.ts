@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, computed, OnInit, signal, Signal, WritableSignal } from '@angular/core';
 import { IClient } from 'src/app/core/models/client.entity';
-import { IReportByClient } from 'src/app/core/models/report-by-cost-center.entity';
+import { IForm } from 'src/app/core/models/form.entity';
+import { IFormReport, IReportByClient } from 'src/app/core/models/report-by-cost-center.entity';
 import { defaultErrorHandler } from 'src/app/shared/default-error-handler';
 import { ReportService } from 'src/app/shared/services/report.service';
 
@@ -17,25 +18,53 @@ export class MonitoramentoComponent {
   ];
 
   loading: boolean = false;
-  reportData: IReportByClient[];
-  selectedClientId: string;
+  reportData: WritableSignal<IReportByClient[]> = signal(null);
+  viewMode: 'client' | 'sector' | 'form' = 'client';
+  
+  currClient: IClient;
+
+  selectedClientId: WritableSignal<string> = signal(null);
+  selectedSectorId: WritableSignal<string> = signal(null);
+  selectedFormId: WritableSignal<string> = signal(null);
+
+  selectedSector: Signal<IReportByClient> = computed(() => {
+    return this.reportData() && this.reportData().find(sector => sector.id === this.selectedSectorId());
+  });
+
+  selectedForm: Signal<IFormReport> = computed(() => {
+    return this.selectedSector() && this.selectedSector().forms.find(form => form.id === this.selectedFormId());
+  });
 
   constructor(
     private reportService: ReportService
   ) {}
 
+  selectCostCenter(costCenter: IReportByClient) {
+    this.selectedSectorId.set(costCenter.id);
+    this.viewMode = 'sector';
+  }
+
+  selectForm(form: IFormReport) {
+    this.selectedFormId.set(form.id);
+    this.viewMode = 'form';
+  }
+
   fetchReportData() {
     this.loading = true;
     this.reportService
-      .getExecutionsNotAccordinglyByClient(this.selectedClientId)
+      .getExecutionsNotAccordinglyByClient(this.selectedClientId())
       .subscribe(defaultErrorHandler(data => {
-        this.reportData = data;
+        this.reportData.set(data);
         this.loading = false;
       }));
   }
 
   onClientChange(client: IClient) {
-    this.selectedClientId = client.id;
+    this.currClient = client;
+    this.viewMode = 'client';
+    this.selectedClientId.set(client.id);
+    this.selectedSectorId.set(null);
+    this.selectedFormId.set(null);
     this.fetchReportData();
   }
 

@@ -10,7 +10,7 @@
               <div class="row">
                 <div class="col">
                   <h4 class="card-title flex-grow-1 mb-2">
-                    {{form?.title}}
+                    Formulário: {{form?.title}}
                   </h4>
                   <h4 class="card-title flex-grow-1 mb-2">
                     Listagem de respostas
@@ -48,94 +48,9 @@
                 </label>
               </div>
             </div>
+          
+            <app-execution-table-list [items]="items" [form]="form" [showValues]="showValues" (onDelete)="delete($event)"></app-execution-table-list>
 
-            <div class="table-responsive mt-1">
-              <table class="table table-gridjs">
-                <thead>
-                <tr>
-                  <th class="sort">Respondido por</th>
-                  <th class="sort">Respondido em</th>
-                  <th class="sort">Conformidade</th>
-                  @if (showValues) {
-                    @for (component of form.components; track component.id) {
-                      <th class="sort bg-primary text-light">{{component.title}}</th>
-                    }
-                  }
-                  <th>Ações</th>
-                </tr>
-                </thead>
-                <tbody>
-                  @for(data of items;track $index){
-                <tr>
-                  <td>
-                    <a [routerLink]="['/cadastro/tecnicos/', data.technicianId]" href="#">
-                      <ngb-highlight [result]="data.technician.name" [term]="search"></ngb-highlight>
-                    </a>
-                  </td>
-                  <td><ngb-highlight [result]="data.createdAt | date" [term]="search"></ngb-highlight></td>
-                  <td>
-                    <span class="badge" style="font-size: 1em;" [ngClass]="{'bg-success': data.accordingly, 'bg-danger': !data.accordingly}">
-                      <ngb-highlight [result]="data.accordingly ? 'Sim' : 'Não'" [term]="search"></ngb-highlight>
-                    </span>
-                  </td>
-
-                  @if (showValues) {
-                    @for (component of form.components; track component.id) {
-                      <td>
-                        @if (component.type === 'upload') {
-                          <span
-                            class="ld-flex align-items-center"
-                          >
-                            <button
-                              class="btn btn-primary btn-sm me-2"
-                              #btn
-                              (click)="download(getExecutionValue(component, data).value, btn)"
-                            >
-                              <i class="ri-download-line align-middle"></i>
-                            </button>
-                            <span>{{getExecutionDisplay(component, data)}}</span>
-                          </span>
-                        }
-                        @else {
-                          {{getExecutionDisplay(component, data)}}
-                        }
-                        @if (!getExecutionValue(component, data).accordingly) {
-                          <span class="text-danger">
-                            <i class="ri-error-warning-fill"></i>
-                          </span>
-                        }
-                      </td>
-                    }
-                  }
-
-                  <td data-column-id="actions" class="gridjs-td">
-                    <div class="d-flex gap-2">
-                      <!-- Botão Editar -->
-                      <a
-                        (click)="viewExecution(data)"
-                        class="btn btn-icon btn-sm btn-ghost-info"
-                        title="Ver respostas"
-                      >
-                        <!-- fs-5 faz o ícone ser 1.25rem -->
-                        <!-- Você pode usar fs-4 (1.5rem), fs-3 (1.75rem), etc. conforme desejar -->
-                        <i class="ri-eye-line align-bottom fs-5"></i>
-                      </a>
-                  
-                      <!-- Botão Excluir -->
-                      <button
-                        (click)="delete(data.id)"
-                        class="btn btn-icon btn-sm btn-ghost-danger"
-                        title="Excluir"
-                      >
-                        <i class="ri-delete-bin-line align-bottom fs-5"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              }
-                </tbody>
-              </table>
-            </div>
             <div class="row justify-content-md-between align-items-md-center">
               <div class="col-sm-12 col-md-5">
                   <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
