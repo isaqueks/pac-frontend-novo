@@ -10,12 +10,13 @@ export const MENU: MenuItem[] = [
     // isCollapsed: true,
     subItems: [
       {
-        label: 'Dashboard',
+        label: 'Início',
         link: '/',
       },
       {
         label: 'Monitoramento',
         link: '/relatorios/monitoramento',
+        perms: [UserRoleEnum.CLIENT, UserRoleEnum.ADMIN]
       },
     ],
     isCollapsed: false

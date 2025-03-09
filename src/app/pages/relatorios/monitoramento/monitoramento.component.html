@@ -46,6 +46,11 @@
 								</div>
 							</div>
 							}
+							@empty {
+							<div class="alert alert-info" role="alert">
+								Nenhuma inconformidade encontrada
+							</div>
+							}
 						</div>
 					}
 					@else if (viewMode === 'sector') {

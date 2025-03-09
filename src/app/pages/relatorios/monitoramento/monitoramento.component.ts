@@ -17,7 +17,7 @@ export class MonitoramentoComponent {
     { label: 'Monitoramento', active: true }
   ];
 
-  loading: boolean = false;
+  loading: boolean = true;
   reportData: WritableSignal<IReportByClient[]> = signal(null);
   viewMode: 'client' | 'sector' | 'form' = 'client';
   

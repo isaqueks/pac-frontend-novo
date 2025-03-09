@@ -52,7 +52,8 @@ export class CadastroCentroCustoComponent {
             email: costCenter.user?.email
         });
         this.selectedClient = costCenter.client;
-        this.costCenterForm.get('password').disable();
+        this.costCenterForm.get('password').clearValidators();
+        this.costCenterForm.get('password').updateValueAndValidity();
       }));
     }
     else {
@@ -75,14 +76,14 @@ export class CadastroCentroCustoComponent {
         // this.snackBar.open('Setor atualizado com sucesso', 'Fechar', {
         //   duration: 3000
         // });
-        this.router.navigate(['/cost-center']);
+        this.router.navigate(['/cadastro/setores']);
       }));
     } else {
       this.costCenterService.create(costCenter).subscribe(defaultErrorHandler(() => {
         // this.snackBar.open('Setor criado com sucesso', 'Fechar', {
         //   duration: 3000
         // });
-        this.router.navigate(['/cost-center']);
+        this.router.navigate(['/cadastro/setores']);
       }));
     }
   }

@@ -6,13 +6,13 @@
  </div>
 
 <!-- Form Row (somente visível se loading = true, pois no original estava [attr.hidden]="!loading") -->
-<div class="row" *ngIf="!loading">
+<div class="row" [attr.hidden]="loading || undefined">
   <div class="col-md-6 mb-3">
     <label for="clientSelect" class="form-label">Selecionar Cliente</label>
     <select
       id="clientSelect"
       class="form-select"
-      [disabled]="readOnly || loading"
+      [disabled]="readOnly || loading || clientSelectDisabled"
       (change)="selectClient($event)"
       [value]="selectedClient?.id"
     >

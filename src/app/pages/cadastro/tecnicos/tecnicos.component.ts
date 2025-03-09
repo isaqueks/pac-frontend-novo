@@ -60,6 +60,7 @@ export class TecnicosComponent {
     if (cc) {
       this.fetchData(cc.id);
     } else {
+      this.loading = false;
       this.items = [];
     }
   }

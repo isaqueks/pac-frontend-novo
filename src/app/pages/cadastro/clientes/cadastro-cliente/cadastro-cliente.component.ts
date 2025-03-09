@@ -54,7 +54,8 @@ export class CadastroClienteComponent {
               ...client,
               email: client.user?.email
           });
-          this.clientForm.get('password')?.disable();
+          this.clientForm.get('password').clearValidators();
+          this.clientForm.get('password').updateValueAndValidity();
         }));
       }
     });

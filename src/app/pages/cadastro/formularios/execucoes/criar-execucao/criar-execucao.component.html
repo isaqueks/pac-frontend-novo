@@ -31,7 +31,7 @@
               </div>
   
               <!-- Corpo do componente -->
-              <div class="card-body">
+              <div class="card-body {{(showNotes && readOnlyNotes && !notes[i]?.accordingly) ? 'text-danger' : ''}}">
                 <ng-container [ngSwitch]="component.type">
   
                   <!-- Campo Numérico -->
@@ -227,7 +227,7 @@
                     id="accordingly_{{ i }}"
                   />
                   <label
-                    class="form-check-label"
+                    class="form-check-label {{notes[i]?.accordingly ? '' : 'text-danger'}}"
                     for="accordingly_{{ i }}"
                   >
                     Dentro dos conformes

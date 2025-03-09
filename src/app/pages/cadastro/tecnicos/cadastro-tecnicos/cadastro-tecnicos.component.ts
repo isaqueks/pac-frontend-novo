@@ -43,7 +43,8 @@ export class CadastroTecnicosComponent {
             ...technician,
             email: technician.user?.email,
         });
-        this.technicianForm.get('password')?.disable();
+        this.technicianForm.get('password').clearValidators();
+        this.technicianForm.get('password').updateValueAndValidity();
         this.selectedCostCenter = technician.costCenter;
       }));
     }

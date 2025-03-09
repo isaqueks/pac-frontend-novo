@@ -1,0 +1,80 @@
+<!-- Spinner exibido enquanto `user` não está disponível -->
+<div *ngIf="!user" class="spinner-border text-primary" role="status">
+  <span class="visually-hidden">Carregando...</span>
+</div>
+
+<!-- Quando `user` existe, exibimos o conteúdo -->
+<ng-container *ngIf="user">
+  <div class="home-container">
+    <!-- Card principal do Bootstrap -->
+    <div class="card">
+      <!-- Cabeçalho do Card -->
+      <div class="card-header">
+        <h5 class="card-title">Bem-vindo, {{ user.email }}</h5>
+        <p class="card-subtitle text-muted">
+          {{ getUserRoleLabel(user.role) }}
+        </p>
+      </div>
+
+      <!-- Corpo do Card -->
+      <div class="card-body">
+        <!-- Informações de Cliente -->
+        <ng-container *ngIf="user.client">
+          <h3>Informações da Empresa</h3>
+          <p><strong>Razão Social:</strong> {{ user.client.businessName }}</p>
+          <p><strong>Nome Fantasia:</strong> {{ user.client.companyName }}</p>
+          <p><strong>CNPJ:</strong> {{ user.client.cnpj | cpfCnpj }}</p>
+        </ng-container>
+
+        <!-- Informações de Centro de Custo -->
+        <ng-container *ngIf="user.costCenter">
+          <h3>Informações do Setor</h3>
+          <p>
+            <strong>Nome do Setor:</strong>
+            {{ user.costCenter.companyName }}
+          </p>
+          <p>
+            <strong>Endereço:</strong>
+            {{ user.costCenter.addressStreet }},
+            {{ user.costCenter.addressNumber }}
+          </p>
+          <p>
+            <strong>Cidade:</strong>
+            {{ user.costCenter.addressCity }},
+            {{ user.costCenter.addressState }}
+          </p>
+        </ng-container>
+
+        <!-- Informações de Técnico -->
+        <ng-container *ngIf="user.technician">
+          <h3>Informações do Técnico</h3>
+          <p><strong>Nome:</strong> {{ user.technician.name }}</p>
+          <p><strong>Documento:</strong> {{ user.technician.document }}</p>
+          <p><strong>Telefone:</strong> {{ user.technician.phone }}</p>
+        </ng-container>
+
+        <!-- Informações de Gerente Técnico -->
+        <ng-container *ngIf="user.technicalManager">
+          <h3>Informações do Responsável Técnico</h3>
+          <p><strong>Nome:</strong> {{ user.technicalManager.name }}</p>
+          <p><strong>Documento:</strong> {{ user.technicalManager.document }}</p>
+          <p><strong>Telefone:</strong> {{ user.technicalManager.phone }}</p>
+        </ng-container>
+
+        <!-- Informações Genéricas -->
+        <ng-container
+          *ngIf="
+            !user.client &&
+            !user.costCenter &&
+            !user.technician &&
+            !user.technicalManager
+          "
+        >
+          <p>Não há informações adicionais disponíveis para o seu perfil.</p>
+        </ng-container>
+      </div>
+      <!-- fim do card-body -->
+    </div>
+    <!-- fim do card -->
+  </div>
+</ng-container>

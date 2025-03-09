@@ -181,12 +181,14 @@
                     </div>
                     <div class="col-md-6">
                       <div class="mb-3">
-                        <label for="password" class="form-label">Senha</label>
+                        <label for="password" class="form-label">
+                          {{isEditMode ? 'Atualizar Senha (Opcional)' : 'Senha'}}
+                        </label>
                         <input
                           type="password"
                           class="form-control"
                           id="password"
-                          placeholder="Digite a senha"
+                          placeholder="{{isEditMode ? 'Atualizar Senha (Opcional)' : 'Digite a senha'}}"
                           formControlName="password"
                           required
                         />

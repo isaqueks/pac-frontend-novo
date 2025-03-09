@@ -18,6 +18,8 @@ export class CostCenterSelectComponent {
   @Input() label: string = 'Selecionar Setor';
   @Input() readOnly: boolean = false;
 
+  clientSelectDisabled: boolean = false;
+
   clients: IClient[] = [];
   costCenters: ICostCenter[] = [];
 
@@ -34,6 +36,7 @@ export class CostCenterSelectComponent {
     const clientId = ev.target.value;
     const client = this.clients.find(client => client.id === clientId);
     this.selectedClient = client;
+    console.log(this.selectedClient)
     this.loadCostCenters(clientId);
   }
 
@@ -75,6 +78,7 @@ export class CostCenterSelectComponent {
         });
       }
       else if (user.role === UserRoleEnum.CLIENT) {
+        this.clientSelectDisabled = true;
         const { client } = user;
         this.clients = [client];
         this.selectedClient = client;
@@ -82,6 +86,7 @@ export class CostCenterSelectComponent {
         this.loading = false;
       }
       else if (user.role === UserRoleEnum.COST_CENTER) {
+        this.readOnly = true;
         this.costCenterService.getById(user.costCenter.id).subscribe(defaultErrorHandler(costCenter => {
           this.clients = [costCenter.client];
           this.costCenters = [costCenter];
@@ -90,6 +95,7 @@ export class CostCenterSelectComponent {
         }));
       }
       else if (user.role === UserRoleEnum.TECHNICIAN) {
+        this.readOnly = true;
           this.costCenterService.getById(user.technician.costCenterId).subscribe(defaultErrorHandler(costCenter => {
               this.clients = [costCenter.client];
               this.costCenters = [costCenter];
@@ -98,6 +104,7 @@ export class CostCenterSelectComponent {
           }));
       }
       else if (user.role === UserRoleEnum.TECHNICAL_MANAGER) {
+        this.readOnly = true;
           this.costCenterService.getById(user.technicalManager.costCenterId).subscribe(defaultErrorHandler(costCenter => {
               this.clients = [costCenter.client];
               this.costCenters = [costCenter];
