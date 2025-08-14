@@ -5,13 +5,13 @@ import { Observable } from 'rxjs';
 import { ITechnician } from 'src/app/core/models/techician.entity';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class TechnicianService implements IEntityService<ITechnician> {
 
-  constructor(
-    private http: HttpClient
-  ) { }
+    constructor(
+        private http: HttpClient
+    ) { }
 
     getAll(): Observable<ITechnician[]> {
         return this.http.get<ITechnician[]>('/technicians');
@@ -29,8 +29,11 @@ export class TechnicianService implements IEntityService<ITechnician> {
         return this.http.post<ITechnician>('/technicians', entity);
     }
 
-    update(entity: ITechnician): Observable<ITechnician> {
-        return this.http.put<ITechnician>(`/technicians/${entity.id}`, entity);
+    update(entity: ITechnician & { password?: string }): Observable<ITechnician> {
+        return this.http.put<ITechnician>(`/technicians/${entity.id}`, {
+            ...entity,
+            password: entity.password || undefined
+        });
     }
 
     delete(id: string): Observable<void> {

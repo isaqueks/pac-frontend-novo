@@ -5,13 +5,13 @@ import { Observable } from 'rxjs';
 import { ITechnicalManager } from 'src/app/core/models/technical-maneger.entity';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class TechnicianManagerService implements IEntityService<ITechnicalManager> {
 
-  constructor(
-    private http: HttpClient
-  ) { }
+    constructor(
+        private http: HttpClient
+    ) { }
 
     getAll(): Observable<ITechnicalManager[]> {
         return this.http.get<ITechnicalManager[]>('/technical-managers');
@@ -29,8 +29,11 @@ export class TechnicianManagerService implements IEntityService<ITechnicalManage
         return this.http.post<ITechnicalManager>('/technical-managers', entity);
     }
 
-    update(entity: ITechnicalManager): Observable<ITechnicalManager> {
-        return this.http.put<ITechnicalManager>(`/technical-managers/${entity.id}`, entity);
+    update(entity: ITechnicalManager & { password?: string }): Observable<ITechnicalManager> {
+        return this.http.put<ITechnicalManager>(`/technical-managers/${entity.id}`, {
+            ...entity,
+            password: entity.password || undefined
+        });
     }
 
     delete(id: string): Observable<void> {

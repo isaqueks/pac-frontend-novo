@@ -25,8 +25,11 @@ export class ClientService implements IEntityService<IClient> {
         return this.http.post<IClient>('/clients', entity);
     }
 
-    update(entity: IClient): Observable<IClient> {
-        return this.http.put<IClient>(`/clients/${entity.id}`, entity);
+    update(entity: IClient & { password?: string }): Observable<IClient> {
+        return this.http.put<IClient>(`/clients/${entity.id}`, {
+          ...entity,
+          password: entity.password || undefined
+        });
     }
 
     delete(id: string): Observable<void> {

@@ -6,6 +6,7 @@ export interface ITechnician extends IBaseEntity {
     name: string;
     phone?: string;
     document: string;
+    function?: string;
     user: IUser;
     userId: string;
     costCenter: ICostCenter;

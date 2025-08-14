@@ -11,6 +11,18 @@
     <div class="card-body">
       <form [formGroup]="costCenterForm" (ngSubmit)="onSubmit()">
 
+        <div class="row">
+          <div class="col-md-12 mb-3">
+            <client-select
+              class="w-full"
+              [readOnly]="isEditMode"
+              [value]="selectedClient"
+              (valueChange)="setSelectedClient($event)"
+            >
+            </client-select>
+          </div>
+        </div>
+
         <!-- Primeira linha -->
         <div class="row">
           <div class="col-md-6 mb-3">
@@ -164,30 +176,6 @@
               formControlName="password"
               placeholder="{{isEditMode ? 'Atualizar Senha (Opcional)' : 'Digite a senha'}}"
             />
-          </div>
-        </div>
-
-        <!-- Sétima linha: select de clientes -->
-        <div class="row">
-          <div class="col-md-12 mb-3">
-            <!-- Se quiser usar um select normal ao invés do componente client-select, com placeholder "Selecione o cliente" -->
-            <!--
-            <label for="clientId" class="form-label">Cliente</label>
-            <select class="form-select" id="clientId" formControlName="clientId">
-              <option value="">Selecione o cliente</option>
-              <option *ngFor="let client of clients" [value]="client.id">
-                {{ client.companyName }}
-              </option>
-            </select>
-            -->
-
-            <!-- Mantendo o componente <client-select> caso seja parte do seu projeto Angular -->
-            <client-select
-              class="w-full"
-              [readOnly]="isEditMode"
-              [(value)]="selectedClient"
-            >
-            </client-select>
           </div>
         </div>
 

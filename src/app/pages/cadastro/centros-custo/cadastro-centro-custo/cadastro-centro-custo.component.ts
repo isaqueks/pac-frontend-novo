@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IClient } from 'src/app/core/models/client.entity';
 import { ICostCenter } from 'src/app/core/models/cost-center.entity';
 import { defaultErrorHandler } from 'src/app/shared/default-error-handler';
+import { ClientService } from 'src/app/shared/services/client.service';
 import { CostCenterService } from 'src/app/shared/services/cost-center.service';
 
 @Component({
@@ -22,6 +23,7 @@ export class CadastroCentroCustoComponent {
   constructor(
     private fb: FormBuilder,
     private costCenterService: CostCenterService,
+    private clientService: ClientService,
     private route: ActivatedRoute,
     private router: Router,
   ) {
@@ -58,6 +60,17 @@ export class CadastroCentroCustoComponent {
     }
     else {
         this.editId = null;
+    }
+  }
+
+  setSelectedClient(client: IClient): void {
+    this.selectedClient = client;
+    if (!this.editId) {
+      this.costCenterForm.patchValue({
+            ...client,
+            companyName: "",
+            email: ""
+        });
     }
   }
 

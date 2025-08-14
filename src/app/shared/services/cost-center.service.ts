@@ -13,27 +13,30 @@ export class CostCenterService implements IEntityService<ICostCenter> {
     private http: HttpClient
   ) { }
 
-    getAll(): Observable<ICostCenter[]> {
-        return this.http.get<ICostCenter[]>('/cost-centers');
-    }
+  getAll(): Observable<ICostCenter[]> {
+    return this.http.get<ICostCenter[]>('/cost-centers');
+  }
 
-    getByClientId(clientId: string): Observable<ICostCenter[]> {
-        return this.http.get<ICostCenter[]>(`/cost-centers?clientId=${clientId}`);
-      }
+  getByClientId(clientId: string): Observable<ICostCenter[]> {
+    return this.http.get<ICostCenter[]>(`/cost-centers?clientId=${clientId}`);
+  }
 
-    getById(id: string): Observable<ICostCenter> {
-        return this.http.get<ICostCenter>(`/cost-centers/${id}`);
-    }
+  getById(id: string): Observable<ICostCenter> {
+    return this.http.get<ICostCenter>(`/cost-centers/${id}`);
+  }
 
-    create(entity: ICostCenter): Observable<ICostCenter> {
-        return this.http.post<ICostCenter>('/cost-centers', entity);
-    }
+  create(entity: ICostCenter): Observable<ICostCenter> {
+    return this.http.post<ICostCenter>('/cost-centers', entity);
+  }
 
-    update(entity: ICostCenter): Observable<ICostCenter> {
-        return this.http.put<ICostCenter>(`/cost-centers/${entity.id}`, entity);
-    }
+  update(entity: ICostCenter & { password?: string }): Observable<ICostCenter> {
+    return this.http.put<ICostCenter>(`/cost-centers/${entity.id}`, {
+      ...entity,
+      password: entity.password || undefined
+    });
+  }
 
-    delete(id: string): Observable<void> {
-        return this.http.delete<void>(`/cost-centers/${id}`);
-    }
+  delete(id: string): Observable<void> {
+    return this.http.delete<void>(`/cost-centers/${id}`);
+  }
 }

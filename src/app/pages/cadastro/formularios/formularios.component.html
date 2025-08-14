@@ -15,7 +15,7 @@
                   <cost-center-select class="h-[50px] ml-3" (valueChange)="onCostCenterChange($event)"></cost-center-select>
                 </div>
                 <div class="col">
-                  @if ([roles.ADMIN, roles.COST_CENTER].includes(user.role)) {
+                  @if ([roles.ADMIN, roles.COST_CENTER, roles.TECHNICAL_MANAGER].includes(user.role)) {
                     <div class="float-end">
                       <a routerLink="/cadastro/formularios/cadastrar" class="btn btn-primary waves-effect waves-light">
                         <i class="ri-add-line align-middle me-2"></i> Cadastrar Formulário

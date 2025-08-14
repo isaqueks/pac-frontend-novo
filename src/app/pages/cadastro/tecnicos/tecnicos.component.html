@@ -40,6 +40,7 @@
                   <th class="sort">Telefone</th>
                   <th class="sort">Documento</th>
                   <th class="sort">Setor</th>
+                  <th class="sort">Função</th>
                 <th>Ações</th>
                 </tr>
                 </thead>
@@ -51,6 +52,7 @@
                   <td><ngb-highlight [result]="data.phone | phone" [term]="search"></ngb-highlight></td>
                   <td><ngb-highlight [result]="data.document| cpfCnpj" [term]="search"></ngb-highlight></td>
                   <td><ngb-highlight [result]="data.costCenter.companyName" [term]="search"></ngb-highlight></td>
+                  <td><ngb-highlight [result]="data.function" [term]="search"></ngb-highlight></td>
 
                   <td data-column-id="actions" class="gridjs-td">
                     <div class="d-flex gap-2">

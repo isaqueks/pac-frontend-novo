@@ -26,6 +26,7 @@ export class CadastroTecnicosComponent {
     this.technicianForm = this.fb.group({
       name: ['', Validators.required],
       phone: [''],
+      function: [''],
       document: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
