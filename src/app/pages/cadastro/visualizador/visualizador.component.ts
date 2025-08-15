@@ -1,23 +1,23 @@
 import { Component } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { IClient } from 'src/app/core/models/client.entity';
 import { ICostCenter } from 'src/app/core/models/cost-center.entity';
-import { ITechnicalManager } from 'src/app/core/models/technical-maneger.entity';
+import { ITechnician } from 'src/app/core/models/techician.entity';
 import { IUser } from 'src/app/core/models/user.entity';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { PaginationService } from 'src/app/core/services/pagination.service';
-import { defaultErrorHandler } from 'src/app/shared/default-error-handler';
-import { TechnicianManagerService } from 'src/app/shared/services/technician-manager.service';
+import { ViewerService } from 'src/app/shared/services/viewer.service';
 
 @Component({
-  selector: 'app-resp-tecnicos',
-  templateUrl: './resp-tecnicos.component.html',
-  styleUrl: './resp-tecnicos.component.scss'
+  selector: 'app-visualizador',
+  templateUrl: './visualizador.component.html',
+  styleUrl: './visualizador.component.scss'
 })
-export class RespTecnicosComponent {
+export class VisualizadorComponent {
   // bread crumb items
   breadCrumbItems = [
     { label: 'Cadastro' },
-    { label: 'Responsáveis Técnicos', active: true }
+    { label: 'CIDASC', active: true }
   ];
 
   // Table data
@@ -31,7 +31,7 @@ export class RespTecnicosComponent {
   pageSize: number;
   total: number;
 
-  items: ITechnicalManager[] = [];
+  items: ITechnician[] = [];
 
   loading: boolean = true;
 
@@ -39,7 +39,7 @@ export class RespTecnicosComponent {
 
   constructor(
     private modalService: NgbModal,
-    public service: TechnicianManagerService,
+    public service: ViewerService,
     private sortService: PaginationService,
     private auth: AuthenticationService
   ) {
@@ -55,19 +55,20 @@ export class RespTecnicosComponent {
   fetchData(selectedCostCenterId: string): void {
     this.selectedCostCenterId = selectedCostCenterId;
     this.loading = true;
-    this.service.getAllByCostCenter(selectedCostCenterId).subscribe(defaultErrorHandler((items: ITechnicalManager[]) => {
+    this.service.getAllByCostCenter(selectedCostCenterId).subscribe((items: ITechnician[]) => {
       this.items = items;
 
       this.pageSize = items.length;
       this.total = items.length;
       this.loading = false;
-    }));
+    });
   }
 
   onCostCenterChange(cc: ICostCenter): void {
     if (cc) {
       this.fetchData(cc.id);
     } else {
+      this.loading = false;
       this.items = [];
     }
   }
@@ -75,8 +76,8 @@ export class RespTecnicosComponent {
 
   delete(id: string): void {
     this.loading = true;
-    this.service.delete(id).subscribe(defaultErrorHandler(() => {
+    this.service.delete(id).subscribe(() => {
       this.fetchData(this.selectedCostCenterId);
-    }));
+    });
   }
 }

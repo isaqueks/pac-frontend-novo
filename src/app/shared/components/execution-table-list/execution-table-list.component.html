@@ -71,6 +71,7 @@
           </a>
       
           <!-- Botão Excluir -->
+          @if (currentUser && currentUser.role !== 'VIEWER') {
           <button
             *ngIf="deleteAllowed"
             (click)="delete(data.id)"
@@ -79,6 +80,7 @@
           >
             <i class="ri-delete-bin-line align-bottom fs-5"></i>
           </button>
+          }
         </div>
       </td>
     </tr>

@@ -8,6 +8,8 @@ import { PaginationService } from 'src/app/core/services/pagination.service';
 import { IClient } from 'src/app/core/models/client.entity';
 import { ClientService } from 'src/app/shared/services/client.service';
 import { map } from 'lodash';
+import { IUser } from 'src/app/core/models/user.entity';
+import { AuthenticationService } from 'src/app/core/services/auth.service';
 
 
 @Component({
@@ -38,7 +40,14 @@ export class ClientesComponent {
 
   loading: boolean = true;
 
-  constructor(private modalService: NgbModal,public service: ClientService, private sortService: PaginationService) {
+  currentUser: IUser;
+
+  constructor(
+    private modalService: NgbModal,
+    public service: ClientService, 
+    private sortService: PaginationService,
+    private auth: AuthenticationService,
+  ) {
     this.fetchItems();
   }
 
@@ -61,6 +70,10 @@ export class ClientesComponent {
       { label: 'Cadastro' },
       { label: 'Clientes', active: true }
     ];
+
+    this.auth.getLoggedUser().subscribe(user => {
+      this.currentUser = user;
+    });
   }
 
   // Sort Data

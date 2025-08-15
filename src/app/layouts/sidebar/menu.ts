@@ -16,7 +16,7 @@ export const MENU: MenuItem[] = [
       {
         label: 'Monitoramento',
         link: '/relatorios/monitoramento',
-        perms: [UserRoleEnum.CLIENT, UserRoleEnum.ADMIN]
+        perms: [UserRoleEnum.CLIENT, UserRoleEnum.ADMIN, UserRoleEnum.VIEWER]
       },
     ],
     isCollapsed: false
@@ -35,17 +35,22 @@ export const MENU: MenuItem[] = [
       {
         label: 'Setores',
         link: '/cadastro/setores',
-        perms: [UserRoleEnum.ADMIN, UserRoleEnum.CLIENT]
+        perms: [UserRoleEnum.ADMIN, UserRoleEnum.CLIENT, UserRoleEnum.VIEWER]
       },
       {
         label: 'Técnicos',
         link: '/cadastro/tecnicos',
-        perms: [UserRoleEnum.ADMIN, UserRoleEnum.COST_CENTER, UserRoleEnum.CLIENT]
+        perms: [UserRoleEnum.ADMIN, UserRoleEnum.COST_CENTER, UserRoleEnum.CLIENT, UserRoleEnum.VIEWER]
       },
       {
         label: 'Responsáveis Técnicos',
         link: '/cadastro/responsaveis-tecnicos',
-        perms: [UserRoleEnum.ADMIN, UserRoleEnum.COST_CENTER, UserRoleEnum.CLIENT]
+        perms: [UserRoleEnum.ADMIN, UserRoleEnum.COST_CENTER, UserRoleEnum.CLIENT, UserRoleEnum.VIEWER]
+      },
+      {
+        label: 'CIDASC',
+        link: '/cadastro/visualizador',
+        perms: [UserRoleEnum.ADMIN, UserRoleEnum.COST_CENTER, UserRoleEnum.CLIENT, UserRoleEnum.VIEWER]
       },
       {
         label: 'Formulários',
@@ -55,7 +60,8 @@ export const MENU: MenuItem[] = [
           UserRoleEnum.COST_CENTER, 
           UserRoleEnum.CLIENT, 
           UserRoleEnum.TECHNICIAN, 
-          UserRoleEnum.TECHNICAL_MANAGER
+          UserRoleEnum.TECHNICAL_MANAGER,
+          UserRoleEnum.VIEWER
         ]
       },
     ]

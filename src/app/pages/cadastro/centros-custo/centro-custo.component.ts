@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IClient } from 'src/app/core/models/client.entity';
 import { ICostCenter } from 'src/app/core/models/cost-center.entity';
+import { IUser } from 'src/app/core/models/user.entity';
+import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { PaginationService } from 'src/app/core/services/pagination.service';
 import { CostCenterService } from 'src/app/shared/services/cost-center.service';
 
@@ -32,15 +34,21 @@ items: ICostCenter[] = [];
 
 loading: boolean = true;
 
+currentUser: IUser;
+
 constructor(
   private modalService: NgbModal,
   public service: CostCenterService, 
   private sortService: PaginationService,
+  private auth: AuthenticationService
 ) {
 
 }
 
 ngOnInit(): void {
+  this.auth.getLoggedUser().subscribe(user => {
+    this.currentUser = user;
+  });
 }
 
 carregarCentrosDeCusto(clientId: string): void {

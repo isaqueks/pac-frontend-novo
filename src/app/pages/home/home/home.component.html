@@ -53,6 +53,15 @@
           <p><strong>Telefone:</strong> {{ user.technician.phone }}</p>
         </ng-container>
 
+         <!-- Informações de VIEWER -->
+         <ng-container *ngIf="user.viewer">
+          <h3>Informações do perfil CIDASC</h3>
+          <p><strong>Nome:</strong> {{ user.viewer.name }}</p>
+          <p><strong>Documento:</strong> {{ user.viewer.document }}</p>
+          <p><strong>Telefone:</strong> {{ user.viewer.phone }}</p>
+        </ng-container>
+
+
         <!-- Informações de Gerente Técnico -->
         <ng-container *ngIf="user.technicalManager">
           <h3>Informações do Responsável Técnico</h3>

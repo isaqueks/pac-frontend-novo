@@ -23,6 +23,8 @@ import { ExecucoesComponent } from './formularios/execucoes/execucoes.component'
 import { ListagemExecucoesComponent } from './formularios/execucoes/listagem-execucoes/listagem-execucoes.component';
 import { CriarExecucaoComponent } from './formularios/execucoes/criar-execucao/criar-execucao.component';
 import { VerExecucaoComponent } from './formularios/execucoes/ver-execucao/ver-execucao.component';
+import { VisualizadorComponent } from './visualizador/visualizador.component';
+import { CadastroVisualizadorComponent } from './visualizador/cadastro-visualizador/cadastro-visualizador.component';
 
 
 @NgModule({
@@ -45,7 +47,10 @@ import { VerExecucaoComponent } from './formularios/execucoes/ver-execucao/ver-e
     ExecucoesComponent,
     ListagemExecucoesComponent,
     CriarExecucaoComponent,
-    VerExecucaoComponent
+    VerExecucaoComponent,
+
+    VisualizadorComponent,
+    CadastroVisualizadorComponent
   ],
   imports: [
     CommonModule,

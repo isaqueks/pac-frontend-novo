@@ -103,6 +103,15 @@ export class CostCenterSelectComponent {
               this.loading = false;
           }));
       }
+      else if (user.role === UserRoleEnum.VIEWER) {
+        this.readOnly = true;
+          this.costCenterService.getById(user.viewer.costCenterId).subscribe(defaultErrorHandler(costCenter => {
+              this.clients = [costCenter.client];
+              this.costCenters = [costCenter];
+              this.selectCostCenter({ target: { value: costCenter.id } });
+              this.loading = false;
+          }));
+      }
       else if (user.role === UserRoleEnum.TECHNICAL_MANAGER) {
         this.readOnly = true;
           this.costCenterService.getById(user.technicalManager.costCenterId).subscribe(defaultErrorHandler(costCenter => {

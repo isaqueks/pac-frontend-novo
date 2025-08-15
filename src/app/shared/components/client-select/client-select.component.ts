@@ -67,6 +67,15 @@ export class ClientSelectComponent implements OnInit {
                     this.readOnly = true;
                 });
             }
+            else if (user.role === UserRoleEnum.VIEWER) {
+                this.cc.getById(user.viewer.costCenterId).subscribe(costCenter => {
+                    const { client } = costCenter;
+                    this.clients = [client];
+                    this.selectClient({ target: { value: client.id } });
+                    this.loading = false;
+                    this.readOnly = true;
+                });
+            }
             else {
                 this.loading = false;
             }

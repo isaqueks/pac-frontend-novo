@@ -32,6 +32,8 @@ getUserRoleLabel(role: UserRoleEnum) {
             return 'Empresa';
         case 'TECHNICAL_MANAGER':
             return 'Responsável Técnico';
+        case 'VIEWER':
+            return 'CIDASC';
     }
     return role;
 }

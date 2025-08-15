@@ -53,7 +53,8 @@ export class TopbarComponent implements OnInit {
     [UserRoleEnum.CLIENT]: 'Empresa',
     [UserRoleEnum.COST_CENTER]: 'Setor',
     [UserRoleEnum.TECHNICIAN]: 'Técnico',
-    [UserRoleEnum.TECHNICAL_MANAGER]: 'Resp. Técnico'
+    [UserRoleEnum.TECHNICAL_MANAGER]: 'Resp. Técnico',
+    [UserRoleEnum.VIEWER]: 'Perfil CIDASC'
   };
 
   constructor(@Inject(DOCUMENT) private document: any, private eventService: EventService, public languageService: LanguageServiceB, private modalService: NgbModal,
@@ -77,6 +78,9 @@ export class TopbarComponent implements OnInit {
         break;
       case UserRoleEnum.TECHNICAL_MANAGER:
         return this.userData.technicalManager.name;
+        break;
+      case UserRoleEnum.VIEWER:
+        return this.userData.viewer.name;
         break;
       default:
         return '';
@@ -121,22 +125,22 @@ export class TopbarComponent implements OnInit {
       }
 
       this.reportService.getExecutionsNotAccordinglyByClient(user.client.id)
-      .subscribe(data => {
-        this.allnotifications = data.map(report => {
-          const inconform = report.forms.reduce((acc, form) => {
-            return acc + form.executions.length;
-          }, 0);
+        .subscribe(data => {
+          this.allnotifications = data.map(report => {
+            const inconform = report.forms.reduce((acc, form) => {
+              return acc + form.executions.length;
+            }, 0);
 
-          return {
-            id: report.id,
-            desc: report.companyName,
-            icon: "bx-error-circle",
-            time: `${inconform} inconformidades`,
-            checkboxId: "all-notification-check01",
-            state: false
-          }
-        })
-      });
+            return {
+              id: report.id,
+              desc: report.companyName,
+              icon: "bx-error-circle",
+              time: `${inconform} inconformidades`,
+              checkboxId: "all-notification-check01",
+              state: false
+            }
+          })
+        });
     })
   }
 

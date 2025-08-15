@@ -5,6 +5,8 @@ import { IFormComponent, FormComponentType } from 'src/app/core/models/form-comp
 import { IForm } from 'src/app/core/models/form.entity';
 import { FormService } from '../../services/form.service';
 import { defaultErrorHandler } from '../../default-error-handler';
+import { IUser } from 'src/app/core/models/user.entity';
+import { AuthenticationService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-execution-table-list',
@@ -20,10 +22,17 @@ export class ExecutionTableListComponent {
   @Input() deleteAllowed: boolean = true;
   @Output() onDelete = new EventEmitter<string>();
 
+  currentUser: IUser;
+
   constructor(
     private router: Router,
-    private service: FormService
-  ) {}
+    private service: FormService,
+    private auth: AuthenticationService
+  ) {
+    this.auth.getLoggedUser().subscribe(user => {
+      this.currentUser = user;
+    });
+  }
 
   getExecutionValue(component: IFormComponent, exec: IFormExecution) {
     return exec.executionValues.find(v => v.formComponentId === component.id);
