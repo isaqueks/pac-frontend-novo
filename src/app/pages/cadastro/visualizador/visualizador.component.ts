@@ -23,8 +23,6 @@ export class VisualizadorComponent {
   // Table data
   griddata: any;
 
-  selectedCostCenterId: string | null = null;
-
   search: string;
 
   page: number = 1;
@@ -49,13 +47,13 @@ export class VisualizadorComponent {
   ngOnInit(): void {
     this.auth.getLoggedUser().subscribe(user => {
       this.currentUser = user;
+      this.fetchData();
     });
   }
 
-  fetchData(selectedCostCenterId: string): void {
-    this.selectedCostCenterId = selectedCostCenterId;
+  fetchData(): void {
     this.loading = true;
-    this.service.getAllByCostCenter(selectedCostCenterId).subscribe((items: ITechnician[]) => {
+    this.service.getAll().subscribe((items: ITechnician[]) => {
       this.items = items;
 
       this.pageSize = items.length;
@@ -64,20 +62,11 @@ export class VisualizadorComponent {
     });
   }
 
-  onCostCenterChange(cc: ICostCenter): void {
-    if (cc) {
-      this.fetchData(cc.id);
-    } else {
-      this.loading = false;
-      this.items = [];
-    }
-  }
-
 
   delete(id: string): void {
     this.loading = true;
     this.service.delete(id).subscribe(() => {
-      this.fetchData(this.selectedCostCenterId);
+      this.fetchData();
     });
   }
 }

@@ -50,7 +50,7 @@ export const MENU: MenuItem[] = [
       {
         label: 'CIDASC',
         link: '/cadastro/visualizador',
-        perms: [UserRoleEnum.ADMIN, UserRoleEnum.COST_CENTER, UserRoleEnum.CLIENT, UserRoleEnum.VIEWER]
+        perms: [UserRoleEnum.ADMIN, UserRoleEnum.VIEWER]
       },
       {
         label: 'Formulários',

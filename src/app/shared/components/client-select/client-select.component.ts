@@ -42,7 +42,7 @@ export class ClientSelectComponent implements OnInit {
                 return;
             }
 
-            if (user.role === UserRoleEnum.ADMIN) {
+            if (user.role === UserRoleEnum.ADMIN || user.role === UserRoleEnum.VIEWER) {
                 this.clientService.getAll().subscribe(clients => {
                     this.clients = clients;
                     if (clients.length > 0) {
@@ -60,15 +60,6 @@ export class ClientSelectComponent implements OnInit {
             }
             else if (user.role === UserRoleEnum.COST_CENTER) {
                 this.cc.getById(user.costCenter.clientId).subscribe(costCenter => {
-                    const { client } = costCenter;
-                    this.clients = [client];
-                    this.selectClient({ target: { value: client.id } });
-                    this.loading = false;
-                    this.readOnly = true;
-                });
-            }
-            else if (user.role === UserRoleEnum.VIEWER) {
-                this.cc.getById(user.viewer.costCenterId).subscribe(costCenter => {
                     const { client } = costCenter;
                     this.clients = [client];
                     this.selectClient({ target: { value: client.id } });

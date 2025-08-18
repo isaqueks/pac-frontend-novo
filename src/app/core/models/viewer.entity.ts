@@ -9,6 +9,4 @@ export interface IViewer extends IBaseEntity {
     function?: string;
     user: IUser;
     userId: string;
-    costCenter: ICostCenter;
-    costCenterId: string;
   }

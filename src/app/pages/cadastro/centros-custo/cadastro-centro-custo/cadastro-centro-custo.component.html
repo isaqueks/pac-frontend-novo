@@ -183,7 +183,7 @@
         <button
           type="submit"
           class="btn btn-primary"
-          [disabled]="!costCenterForm.valid"
+          [disabled]="!costCenterForm.valid || currentUser?.role === 'VIEWER'"
         >
           {{ isEditMode ? 'Atualizar' : 'Criar' }}
         </button>
