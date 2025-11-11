@@ -7,28 +7,21 @@
         {{ isEditMode ? 'Editar Formulário' : 'Criar Formulário' }}
       </h5>
     </div>
-    
+
     <!-- Corpo do card (onde fica o formulário) -->
     <div class="card-body">
       <!-- Selecionar Cost Center (componente customizado) -->
       <cost-center-select class="w-100" [(value)]="selectedCostCenter"></cost-center-select>
-      
+
       <!-- Título do Formulário -->
       <div class="mb-3">
         <label for="formTitle" class="form-label">Título do Formulário</label>
-        <input
-          type="text"
-          id="formTitle"
-          class="form-control"
-          [(ngModel)]="form.title"
-          name="title"
-          required
-          placeholder="Digite o título..."
-        />
+        <input type="text" id="formTitle" class="form-control" [(ngModel)]="form.title" name="title" required
+          placeholder="Digite o título..." />
       </div>
 
       <!-- Separador (mat-divider → <hr>) -->
-      <hr/>
+      <hr />
 
       <!-- Seção de componentes do formulário -->
       <div class="form-components-section">
@@ -38,29 +31,16 @@
         </div>
 
         <!-- Loop dos componentes -->
-        <div
-          class="form-component mt-2 p-3 border rounded"
-          *ngFor="let component of formComponents; let i = index"
-        >
+        <div class="form-component mt-2 p-3 border rounded" *ngFor="let component of formComponents; let i = index">
           <div class="card">
             <!-- Cabeçalho do componente -->
             <div class="card-header">
               <div class="mb-3">
-                <label
-                  for="compTitle-{{i}}"
-                  class="form-label"
-                >
+                <label for="compTitle-{{i}}" class="form-label">
                   Título da Questão
                 </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="compTitle-{{i}}"
-                  [(ngModel)]="component.title"
-                  name="compTitle"
-                  required
-                  placeholder="Pergunta principal..."
-                />
+                <input type="text" class="form-control" id="compTitle-{{i}}" [(ngModel)]="component.title"
+                  name="compTitle" required placeholder="Pergunta principal..." />
               </div>
             </div>
 
@@ -69,40 +49,20 @@
               <div class="row mb-3">
                 <!-- Subtítulo -->
                 <div class="col-md-8">
-                  <label
-                    for="compSubtitle-{{i}}"
-                    class="form-label"
-                  >
+                  <label for="compSubtitle-{{i}}" class="form-label">
                     Subtítulo da Questão
                   </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="compSubtitle-{{i}}"
-                    [(ngModel)]="component.subtitle"
-                    name="compSubtitle"
-                    placeholder="Texto de ajuda ou detalhes..."
-                  />
+                  <input type="text" class="form-control" id="compSubtitle-{{i}}" [(ngModel)]="component.subtitle"
+                    name="compSubtitle" placeholder="Texto de ajuda ou detalhes..." />
                 </div>
 
                 <!-- Tipo da Questão -->
                 <div class="col-md-4">
-                  <label
-                    for="compType-{{i}}"
-                    class="form-label"
-                  >
+                  <label for="compType-{{i}}" class="form-label">
                     Tipo da Questão
                   </label>
-                  <select
-                    class="form-select"
-                    id="compType-{{i}}"
-                    [(ngModel)]="component.type"
-                    name="compType"
-                  >
-                    <option
-                      *ngFor="let type of formComponentTypes | keyvalue"
-                      [value]="type.value"
-                    >
+                  <select class="form-select" id="compType-{{i}}" [(ngModel)]="component.type" name="compType">
+                    <option *ngFor="let type of formComponentTypes | keyvalue" [value]="type.value">
                       {{ type.key }}
                     </option>
                   </select>
@@ -110,10 +70,7 @@
               </div>
 
               <!-- Lista de opções (para radio_list, checkbox_list) -->
-              <div
-                class="p-3 border rounded"
-                *ngIf="['radio_list', 'checkbox_list'].includes(component.type)"
-              >
+              <div class="p-3 border rounded" *ngIf="['radio_list', 'checkbox_list'].includes(component.type)">
                 <div class="fw-bold">
                   Opções da lista
                 </div>
@@ -122,99 +79,58 @@
                 <div class="mt-2" *ngFor="let opt of component.options; let j = index">
                   <div class="input-group mb-2">
                     <span class="input-group-text">Opção {{ j+1 }}</span>
-                    <input
-                      type="text"
-                      class="form-control"
-                      [value]="opt"
-                      (change)="component.options[j] = $event.target['value']"
-                      name="option"
-                      required
-                      placeholder="Texto da opção..."
-                      [attr.opt]="opt"
-                    />
-                    <button
-                      class="btn btn-danger"
-                      type="button"
-                      (click)="removeOption(component, j)"
-                      title="Remover opção"
-                    >
+                    <input type="text" class="form-control" [value]="opt"
+                      (change)="component.options[j] = $event.target['value']" name="option" required
+                      placeholder="Texto da opção..." [attr.opt]="opt" />
+                    <button class="btn btn-danger" type="button" (click)="removeOption(component, j)"
+                      title="Remover opção">
                       <i class="ri-delete-bin-line"></i>
                     </button>
                   </div>
 
                   <div class="form-check mb-2 ms-4">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      id="defaultOption{{ j }}"
-                      [checked]="isDefaultOption(component, j)"
-                      (change)="setDefaultOption(component, j)"
-                    />
-                    <label
-                      class="form-check-label"
-                      for="defaultOption{{ j }}"
-                    >
+                    <input class="form-check-input" type="checkbox" id="defaultOption{{ j }}"
+                      [checked]="isDefaultOption(component, j)" (change)="setDefaultOption(component, j)" />
+                    <label class="form-check-label" for="defaultOption{{ j }}">
                       Definir como opção padrão
                     </label>
                   </div>
                 </div>
-                
+
                 <!-- Botão de adicionar opção -->
-                <button
-                  class="btn btn-primary"
-                  type="button"
-                  (click)="addOption(component)"
-                >
+                <button class="btn btn-primary" type="button" (click)="addOption(component)">
                   <i class="ri-add-line align-middle"></i>
                   Adicionar Opção
                 </button>
               </div>
             </div>
 
-            
+
             <div *ngIf="component.type === 'number'">
               <hr class="my-0">
               <div class="row p-3">
                 <!-- Subtítulo -->
                 <div class="col-md-6">
-                  <label
-                    for="def-compSubtitle-{{i}}"
-                    class="form-label"
-                  >
+                  <label for="def-compSubtitle-{{i}}" class="form-label">
                     Valor mínimo padrão (opcional)
                   </label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="def-compSubtitle-{{i}}"
-                    [(ngModel)]="component.minValue"
-                    placeholder="Valor mínimo padrão"
-                    decimalMask
-                  />
+                  <input type="number" class="form-control" id="def-compSubtitle-{{i}}" [(ngModel)]="component.minValue"
+                    placeholder="Valor mínimo padrão" decimalMask />
                 </div>
 
                 <div class="col-md-6">
-                  <label
-                    for="def-compSubtitle-{{i}}"
-                    class="form-label"
-                  >
+                  <label for="def-compSubtitle-{{i}}" class="form-label">
                     Valor máximo padrão (opcional)
                   </label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="def-compSubtitle-{{i}}"
-                    [(ngModel)]="component.maxValue"
-                    placeholder="Valor máximo padrão"
-                    decimalMask
-                  />
+                  <input type="number" class="form-control" id="def-compSubtitle-{{i}}" [(ngModel)]="component.maxValue"
+                    placeholder="Valor máximo padrão" decimalMask />
                 </div>
               </div>
             </div>
 
             <!-- Ações do componente (toggles + remover) -->
             <div class="card-footer d-flex align-items-center justify-content-end">
-<!-- 
+              <!-- 
               <div class="justify-content-start me-auto">
                 teste
               </div>
@@ -222,69 +138,45 @@
 
               <!-- Exigir Justificativa (mat-slide-toggle → switch do Bootstrap) -->
               <div class="form-check form-switch me-3">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  role="switch"
-                  id="insertJustification-{{i}}"
+                <input class="form-check-input" type="checkbox" role="switch" id="insertJustification-{{i}}"
                   [checked]="component.insertJustification"
-                  (change)="component.insertJustification = $event.target['checked']"
-                />
-                <label
-                  class="form-check-label"
-                  for="insertJustification-{{i}}"
-                >
+                  (change)="component.insertJustification = $event.target['checked']" />
+                <label class="form-check-label" for="insertJustification-{{i}}">
                   Exigir Justificativa
                 </label>
               </div>
 
               <!-- Obrigatório -->
               <div class="form-check form-switch me-3">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  role="switch"
-                  id="required-{{i}}"
-                  [checked]="component.required"
-                  (change)="component.required = $event.target['checked']"
-                />
-                <label
-                  class="form-check-label"
-                  for="required-{{i}}"
-                >
+                <input class="form-check-input" type="checkbox" role="switch" id="required-{{i}}"
+                  [checked]="component.required" (change)="component.required = $event.target['checked']" />
+                <label class="form-check-label" for="required-{{i}}">
                   Obrigatório
                 </label>
               </div>
 
               <!-- Botão de excluir componente -->
-              <button
-                class="btn btn-danger"
-                type="button"
-                (click)="removeFormComponent(i)"
-              >
+              <button class="btn btn-danger" type="button" (click)="removeFormComponent(i)">
                 <i class="ri-delete-bin-line align-middle"></i>
+              </button>
+
+              <!-- Duplicate icon -->
+              <button class="btn btn-secondary" type="button" (click)="duplicateFormComponent(i)">
+                <i class="ri-file-copy-line align-middle"></i>
               </button>
             </div>
           </div>
         </div>
       </div>
     </div>
-    
+
     <!-- Rodapé do Card (ações gerais) -->
     <div class="card-footer d-flex gap-2 justify-content-end">
-      <button
-        class="btn btn-primary"
-        type="button"
-        (click)="saveForm()"
-      >
+      <button class="btn btn-primary" type="button" (click)="saveForm()">
         <i class="ri-save-line align-middle"></i>
         Salvar Formulário
       </button>
-      <button
-        class="btn btn-success"
-        type="button"
-        (click)="addFormComponent()"
-      >
+      <button class="btn btn-success" type="button" (click)="addFormComponent()">
         <i class="ri-add-line align-middle"></i>
         Adicionar Componente
       </button>

@@ -70,6 +70,17 @@ export class CadastroFormulariosComponent {
     this.formComponents.splice(index, 1);
   }
 
+  duplicateFormComponent(index: number): void {
+    const componentToDuplicate = this.formComponents[index];
+    const duplicatedComponent: IFormComponent = {
+      ...componentToDuplicate,
+      id: '', // new component should have no ID
+      title: componentToDuplicate.title + ' (Cópia)',
+      options: [...(componentToDuplicate.options || [])] // deep copy of options array
+    };
+    this.formComponents.splice(index + 1, 0, duplicatedComponent);
+  }
+
   saveForm(): void {
     this.form.costCenterId = this.selectedCostCenter.id;
     this.form.costCenter = this.selectedCostCenter;

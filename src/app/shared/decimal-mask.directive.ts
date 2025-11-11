@@ -1,53 +1,35 @@
-import { Directive, HostListener, ElementRef, forwardRef } from '@angular/core';
+import { Directive, HostListener, ElementRef, forwardRef, Input, EventEmitter, Output } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Directive({
   selector: '[decimalMask]',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => DecimalMaskDirective),
-      multi: true
-    }
-  ]
 })
 export class DecimalMaskDirective {
-  private onChange = (value: any) => {};
-  private onTouched = () => {};
+
+  @Input() value: string = '';
+  @Output() valueChange = new EventEmitter<number | null>();
 
   constructor(private el: ElementRef<HTMLInputElement>) {}
 
-  writeValue(value: any): void {
-    if (value !== undefined && value !== null) {
-      this.el.nativeElement.value = DecimalMaskDirective.formatToMask(value.toString());
-    } else {
-      this.el.nativeElement.value = '';
+  ngOnChanges() {
+    // quando [value] mudar, aplica formatação
+    if (this.value !== undefined && this.value !== null) {
+      this.el.nativeElement.value = DecimalMaskDirective.formatToMask(this.value.toString());
     }
-  }
-
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn;
   }
 
   @HostListener('input', ['$event'])
   onInput(event: any) {
     const raw = event.target.value;
+
     const masked = DecimalMaskDirective.formatToMask(raw);
     this.el.nativeElement.value = masked;
 
-    // converte para número
+    // emite número
     const num = DecimalMaskDirective.maskToNumber(masked);
-    this.onChange(num);
+    this.valueChange.emit(num);
   }
 
-  @HostListener('blur')
-  onBlur() {
-    this.onTouched();
-  }
 
   // ----- formata -----
   static formatToMask(value: string): string {
