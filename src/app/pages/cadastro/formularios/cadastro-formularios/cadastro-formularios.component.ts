@@ -95,12 +95,12 @@ export class CadastroFormulariosComponent {
     }
 
     if (this.isEditMode) {
-      this.formService.update({ ...this.form, components: this.formComponents }).subscribe(defaultErrorHandler(() => {
+      this.formService.update({ ...this.form, components }).subscribe(defaultErrorHandler(() => {
         // this.snackBar.open('Formulário atualizado com sucesso', 'Fechar', { duration: 3000 });
         this.router.navigate(['/cadastro/formularios']);
       }));
     } else {
-      this.formService.create({ ...this.form, components: this.formComponents }).subscribe(defaultErrorHandler(() => {
+      this.formService.create({ ...this.form, components }).subscribe(defaultErrorHandler(() => {
         // this.snackBar.open('Formulário criado com sucesso', 'Fechar', { duration: 3000 });
         this.router.navigate(['/cadastro/formularios']);
       }));
