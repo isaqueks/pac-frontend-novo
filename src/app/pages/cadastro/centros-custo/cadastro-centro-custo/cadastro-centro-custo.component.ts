@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IClient } from 'src/app/core/models/client.entity';
 import { ICostCenter } from 'src/app/core/models/cost-center.entity';
+import { IUser } from 'src/app/core/models/user.entity';
+import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { defaultErrorHandler } from 'src/app/shared/default-error-handler';
 import { ClientService } from 'src/app/shared/services/client.service';
 import { CostCenterService } from 'src/app/shared/services/cost-center.service';
@@ -20,12 +22,15 @@ export class CadastroCentroCustoComponent {
 
   private editId: string;
 
+  currentUser?: IUser;
+
   constructor(
     private fb: FormBuilder,
     private costCenterService: CostCenterService,
     private clientService: ClientService,
     private route: ActivatedRoute,
     private router: Router,
+    private auth: AuthenticationService
   ) {
     this.costCenterForm = this.fb.group({
       companyName: ['', Validators.required],
@@ -39,7 +44,7 @@ export class CadastroCentroCustoComponent {
       addressCity: [''],
       addressState: [''],
       email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
@@ -47,11 +52,11 @@ export class CadastroCentroCustoComponent {
     const costCenterId = this.route.snapshot.paramMap.get('id');
     if (costCenterId) {
       this.isEditMode = true;
-        this.editId = costCenterId;
+      this.editId = costCenterId;
       this.costCenterService.getById(costCenterId).subscribe(defaultErrorHandler(costCenter => {
         this.costCenterForm.patchValue({
-            ...costCenter,
-            email: costCenter.user?.email
+          ...costCenter,
+          email: costCenter.user?.email
         });
         this.selectedClient = costCenter.client;
         this.costCenterForm.get('password').clearValidators();
@@ -59,18 +64,25 @@ export class CadastroCentroCustoComponent {
       }));
     }
     else {
-        this.editId = null;
+      this.editId = null;
     }
+
+    this.auth.getLoggedUser().subscribe(user => {
+      this.currentUser = user;
+      if (user.role === 'VIEWER') {
+        this.costCenterForm.disable();
+      }
+    });
   }
 
   setSelectedClient(client: IClient): void {
     this.selectedClient = client;
     if (!this.editId) {
       this.costCenterForm.patchValue({
-            ...client,
-            companyName: "",
-            email: ""
-        });
+        ...client,
+        companyName: "",
+        email: ""
+      });
     }
   }
 

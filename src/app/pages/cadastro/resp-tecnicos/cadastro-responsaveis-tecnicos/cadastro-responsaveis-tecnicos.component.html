@@ -93,7 +93,7 @@
         <button
           type="submit"
           class="btn btn-primary"
-          [disabled]="!technicianForm.valid"
+          [disabled]="!technicianForm.valid || currentUser?.role === 'VIEWER'"
         >
           {{ isEditMode ? 'Atualizar' : 'Criar' }}
         </button>

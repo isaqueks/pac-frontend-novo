@@ -68,7 +68,7 @@ export class CostCenterSelectComponent {
         return;
       }
 
-      if (user.role === UserRoleEnum.ADMIN) {
+      if (user.role === UserRoleEnum.ADMIN || user.role === UserRoleEnum.VIEWER) {
         this.clientService.getAll().subscribe(clients => {
           this.clients = clients;
           if (clients.length > 0) {
@@ -97,15 +97,6 @@ export class CostCenterSelectComponent {
       else if (user.role === UserRoleEnum.TECHNICIAN) {
         this.readOnly = true;
           this.costCenterService.getById(user.technician.costCenterId).subscribe(defaultErrorHandler(costCenter => {
-              this.clients = [costCenter.client];
-              this.costCenters = [costCenter];
-              this.selectCostCenter({ target: { value: costCenter.id } });
-              this.loading = false;
-          }));
-      }
-      else if (user.role === UserRoleEnum.VIEWER) {
-        this.readOnly = true;
-          this.costCenterService.getById(user.viewer.costCenterId).subscribe(defaultErrorHandler(costCenter => {
               this.clients = [costCenter.client];
               this.costCenters = [costCenter];
               this.selectCostCenter({ target: { value: costCenter.id } });

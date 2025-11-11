@@ -4,106 +4,112 @@
 
 <div class="row">
   <div class="col-lg-12">
-      <div class="card">
-          <div class="card-header">
-            <div class="container">
-              <div class="row">
-                <div class="col">
-                  <h4 class="card-title flex-grow-1 mb-2">
-                    Listagem de Setores
-                  </h4>
-                  <client-select class="h-[50px] ml-3" (valueChange)="onClientChange($event)"></client-select>
-                </div>
-                <div class="col">
-                  @if (currentUser && currentUser.role !== 'VIEWER') {
-                    <div class="float-end">
-                      <a routerLink="/cadastro/setores/cadastrar" class="btn btn-primary waves-effect waves-light">
-                        <i class="ri-add-line align-middle me-2"></i> Cadastrar Setor
-                      </a>
-                    </div>
-                  }
-                </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <h4 class="card-title flex-grow-1 mb-2">
+                Listagem de Setores
+              </h4>
+              <client-select class="h-[50px] ml-3" (valueChange)="onClientChange($event)"></client-select>
+            </div>
+            <div class="col">
+              @if (currentUser && currentUser.role !== 'VIEWER') {
+              <div class="float-end">
+                <a routerLink="/cadastro/setores/cadastrar" class="btn btn-primary waves-effect waves-light">
+                  <i class="ri-add-line align-middle me-2"></i> Cadastrar Setor
+                </a>
               </div>
+              }
             </div>
           </div>
+        </div>
+      </div>
 
-          <div class="card-body">
+      <div class="card-body">
 
-            <div class="progress" *ngIf="loading">
-              <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"></div>
-            </div>&nbsp;
-          
-            <div class="table-responsive mt-1">
-              <table class="table table-gridjs">
-                <thead>
-                <tr>
-                  <th class="sort">E-mail</th>
-                  <th class="sort">Razão Social</th>
-                  <th class="sort">Nome Fantasia</th>
-                  <th class="sort">CNPJ</th>
-                  <th class="sort">Cliente</th>
-                  @if (currentUser && currentUser.role !== 'VIEWER') { <th>Ações</th> }
-                </tr>
-                </thead>
-                <tbody>
-                  @for(data of items;track $index){
-                <tr>
-                  <td><ngb-highlight [result]="data.user.email" [term]="search"></ngb-highlight></td>
-                  <td><ngb-highlight [result]="data.businessName" [term]="search"></ngb-highlight></td>
-                  <td><ngb-highlight [result]="data.companyName" [term]="search"></ngb-highlight></td>
-                  <td><ngb-highlight [result]="data.cnpj | cpfCnpj" [term]="search"></ngb-highlight></td>
-                  <td><ngb-highlight [result]="data.client.companyName" [term]="search"></ngb-highlight></td>
+        <div class="progress" *ngIf="loading">
+          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%">
+          </div>
+        </div>&nbsp;
 
-                  @if (currentUser && currentUser.role !== 'VIEWER') {
-                  <td data-column-id="actions" class="gridjs-td">
-                    <div class="d-flex gap-2">
-                      <!-- Botão Editar -->
-                      <a
-                        [routerLink]="['/cadastro/setores', data.id]"
-                        class="btn btn-icon btn-sm btn-ghost-info"
-                        title="Editar"
-                      >
-                        <!-- fs-5 faz o ícone ser 1.25rem -->
-                        <!-- Você pode usar fs-4 (1.5rem), fs-3 (1.75rem), etc. conforme desejar -->
-                        <i class="ri-edit-line align-bottom fs-5"></i>
-                      </a>
-                  
-                      <!-- Botão Excluir -->
-                      <button
-                        (click)="delete(data.id)"
-                        class="btn btn-icon btn-sm btn-ghost-danger"
-                        title="Excluir"
-                      >
-                        <i class="ri-delete-bin-line align-bottom fs-5"></i>
-                      </button>
-                    </div>
-                  </td>
-                  }
-                </tr>
+        <div class="table-responsive mt-1">
+          <table class="table table-gridjs">
+            <thead>
+              <tr>
+                <th class="sort">E-mail</th>
+                <th class="sort">Razão Social</th>
+                <th class="sort">Nome Fantasia</th>
+                <th class="sort">CNPJ</th>
+                <th class="sort">Cliente</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for(data of items;track $index){
+              <tr>
+                <td><ngb-highlight [result]="data.user.email" [term]="search"></ngb-highlight></td>
+                <td><ngb-highlight [result]="data.businessName" [term]="search"></ngb-highlight></td>
+                <td><ngb-highlight [result]="data.companyName" [term]="search"></ngb-highlight></td>
+                <td><ngb-highlight [result]="data.cnpj | cpfCnpj" [term]="search"></ngb-highlight></td>
+                <td><ngb-highlight [result]="data.client.companyName" [term]="search"></ngb-highlight></td>
+
+                @if (currentUser && currentUser.role !== 'VIEWER') {
+                <td data-column-id="actions" class="gridjs-td">
+                  <div class="d-flex gap-2">
+                    <!-- Botão Editar -->
+                    <a [routerLink]="['/cadastro/setores', data.id]" class="btn btn-icon btn-sm btn-ghost-info"
+                      title="Editar">
+                      <!-- fs-5 faz o ícone ser 1.25rem -->
+                      <!-- Você pode usar fs-4 (1.5rem), fs-3 (1.75rem), etc. conforme desejar -->
+                      <i class="ri-edit-line align-bottom fs-5"></i>
+                    </a>
+
+                    <!-- Botão Excluir -->
+                    <button (click)="delete(data.id)" class="btn btn-icon btn-sm btn-ghost-danger" title="Excluir">
+                      <i class="ri-delete-bin-line align-bottom fs-5"></i>
+                    </button>
+                  </div>
+                </td>
+                }
+                @else {
+                <td data-column-id="actions" class="gridjs-td">
+                  <div class="d-flex gap-2">
+                    <!-- Botão Editar -->
+                    <a [routerLink]="['/cadastro/setores', data.id]" class="btn btn-icon btn-sm btn-ghost-info"
+                      title="Visualizar">
+                      <!-- fs-5 faz o ícone ser 1.25rem -->
+                      <!-- Você pode usar fs-4 (1.5rem), fs-3 (1.75rem), etc. conforme desejar -->
+                      <i class="ri-eye-line align-bottom fs-5"></i>
+                    </a>
+
+                  </div>
+                </td>
+                }
+              </tr>
               }
-                </tbody>
-              </table>
+            </tbody>
+          </table>
+        </div>
+        <div class="row justify-content-md-between align-items-md-center">
+          <div class="col-sm-12 col-md-5">
+            <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+              Página {{page}} de {{total ? (total / pageSize) : 1}}
             </div>
-            <div class="row justify-content-md-between align-items-md-center">
-              <div class="col-sm-12 col-md-5">
-                  <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
-                      Página {{page}} de {{total ? (total / pageSize) : 1}}
-                  </div>
-              </div>
-              <!-- Pagination -->
-              <div class="col-sm-12 col-md-5">
-                  <div class="text-md-right float-md-end gridjs-pagination">
-                    <ngb-pagination
-                    [collectionSize]="total" [(page)]="page" [pageSize]="pageSize">
-                  </ngb-pagination>
-                  </div>
-              </div>
-              <!-- End Pagination -->
+          </div>
+          <!-- Pagination -->
+          <div class="col-sm-12 col-md-5">
+            <div class="text-md-right float-md-end gridjs-pagination">
+              <ngb-pagination [collectionSize]="total" [(page)]="page" [pageSize]="pageSize">
+              </ngb-pagination>
             </div>
-          </div><!-- end card-body -->
-      </div><!-- end card -->
+          </div>
+          <!-- End Pagination -->
+        </div>
+      </div><!-- end card-body -->
+    </div><!-- end card -->
   </div>
   <!-- end col -->
 </div>
 <!-- end row -->
-

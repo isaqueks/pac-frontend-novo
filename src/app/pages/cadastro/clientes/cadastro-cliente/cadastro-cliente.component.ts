@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IClient } from 'src/app/core/models/client.entity';
+import { IUser } from 'src/app/core/models/user.entity';
+import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { defaultErrorHandler } from 'src/app/shared/default-error-handler';
 import { ClientService } from 'src/app/shared/services/client.service';
 
@@ -20,12 +22,14 @@ export class CadastroClienteComponent {
    clientForm: FormGroup;
    isEditMode: boolean = false;
    clientId: string | null = null;
+   currentUser?: IUser;
  
    constructor(
      private fb: FormBuilder,
      private clientService: ClientService,
      private router: Router,
-     private route: ActivatedRoute
+     private route: ActivatedRoute,
+     private auth: AuthenticationService
    ) {
      this.clientForm = this.fb.group({
        companyName: ['', Validators.required],
@@ -57,6 +61,13 @@ export class CadastroClienteComponent {
           this.clientForm.get('password').clearValidators();
           this.clientForm.get('password').updateValueAndValidity();
         }));
+      }
+    });
+
+    this.auth.getLoggedUser().subscribe(user => {
+      this.currentUser = user;
+      if (user.role === 'VIEWER') {
+        this.clientForm.disable();
       }
     });
    }

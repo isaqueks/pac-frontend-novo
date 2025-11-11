@@ -42,7 +42,7 @@
                   <th class="sort">Telefone</th>
                   <th class="sort">Documento</th>
                   <th class="sort">Setor</th>
-                  @if (currentUser && currentUser.role !== 'VIEWER') { <th>Ações</th> }
+                  <th>Ações</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -78,6 +78,23 @@
                       </button>
                     </div>
                   </td>
+                  }
+                  @else {
+                    <td data-column-id="actions" class="gridjs-td">
+                      <div class="d-flex gap-2">
+                        <!-- Botão Editar -->
+                        <a
+                          [routerLink]="['/cadastro/responsaveis-tecnicos', data.id]"
+                          class="btn btn-icon btn-sm btn-ghost-info"
+                          title="Visualizar"
+                        >
+                          <!-- fs-5 faz o ícone ser 1.25rem -->
+                          <!-- Você pode usar fs-4 (1.5rem), fs-3 (1.75rem), etc. conforme desejar -->
+                          <i class="ri-eye-line align-bottom fs-5"></i>
+                        </a>
+                    
+                      </div>
+                    </td>
                   }
                 </tr>
               }

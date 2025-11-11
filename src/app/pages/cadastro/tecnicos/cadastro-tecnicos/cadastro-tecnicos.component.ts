@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ICostCenter } from 'src/app/core/models/cost-center.entity';
 import { ITechnician } from 'src/app/core/models/techician.entity';
+import { IUser } from 'src/app/core/models/user.entity';
+import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { defaultErrorHandler } from 'src/app/shared/default-error-handler';
 import { TechnicianService } from 'src/app/shared/services/technician.service';
 
@@ -16,12 +18,14 @@ export class CadastroTecnicosComponent {
   isEditMode = false;
   technicianId: string | null = null;
   selectedCostCenter: ICostCenter = null;
+  currentUser: IUser;
 
   constructor(
     private fb: FormBuilder,
     private technicianService: TechnicianService,
     private route: ActivatedRoute,
     private router: Router,
+    private auth: AuthenticationService
   ) {
     this.technicianForm = this.fb.group({
       name: ['', Validators.required],
@@ -49,6 +53,13 @@ export class CadastroTecnicosComponent {
         this.selectedCostCenter = technician.costCenter;
       }));
     }
+
+    this.auth.getLoggedUser().subscribe(user => {
+      this.currentUser = user;
+      if (user.role === 'VIEWER') {
+        this.technicianForm.disable();
+      }
+    });
   }
 
   onSubmit(): void {

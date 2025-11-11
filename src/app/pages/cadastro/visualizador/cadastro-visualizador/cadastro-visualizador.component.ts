@@ -46,7 +46,6 @@ export class CadastroVisualizadorComponent {
         });
         this.viewerForm.get('password').clearValidators();
         this.viewerForm.get('password').updateValueAndValidity();
-        this.selectedCostCenter = viewer.costCenter;
       }));
     }
   }
@@ -57,8 +56,6 @@ export class CadastroVisualizadorComponent {
     }
 
     const viewer: IViewer = this.viewerForm.value;
-    viewer.costCenterId = this.selectedCostCenter.id;
-    viewer.costCenter = this.selectedCostCenter;
 
     if (this.isEditMode) {
       viewer.id = this.viewerId!;

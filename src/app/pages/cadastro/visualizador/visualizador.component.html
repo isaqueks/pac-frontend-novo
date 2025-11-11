@@ -1,5 +1,5 @@
 <!-- Start Breadcrumbs -->
-<app-breadcrumbs title="Técnicos" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+<app-breadcrumbs title="CIDASC" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 <!-- End Breadcrumbs -->
 
 <div class="row">
@@ -12,7 +12,6 @@
                   <h4 class="card-title flex-grow-1 mb-2">
                     Listagem de Perfil CIDASC
                   </h4>
-                  <cost-center-select class="h-[50px] ml-3" (valueChange)="onCostCenterChange($event)"></cost-center-select>
                 </div>
                 <div class="col">
                   @if (currentUser && currentUser.role !== 'VIEWER') {
@@ -41,7 +40,6 @@
                   <th class="sort">Nome</th>
                   <th class="sort">Telefone</th>
                   <th class="sort">Documento</th>
-                  <th class="sort">Setor</th>
                   <th class="sort">Função</th>
                   @if (currentUser && currentUser.role !== 'VIEWER') { <th>Ações</th> }
                 </tr>
@@ -53,7 +51,6 @@
                   <td><ngb-highlight [result]="data.name" [term]="search"></ngb-highlight></td>
                   <td><ngb-highlight [result]="data.phone | phone" [term]="search"></ngb-highlight></td>
                   <td><ngb-highlight [result]="data.document| cpfCnpj" [term]="search"></ngb-highlight></td>
-                  <td><ngb-highlight [result]="data.costCenter.companyName" [term]="search"></ngb-highlight></td>
                   <td><ngb-highlight [result]="data.function" [term]="search"></ngb-highlight></td>
 
                   @if (currentUser && currentUser.role !== 'VIEWER') {
@@ -61,7 +58,7 @@
                     <div class="d-flex gap-2">
                       <!-- Botão Editar -->
                       <a
-                        [routerLink]="['/cadastro/tecnicos', data.id]"
+                        [routerLink]="['/cadastro/visualizador', data.id]"
                         class="btn btn-icon btn-sm btn-ghost-info"
                         title="Editar"
                       >
