@@ -49,7 +49,7 @@ export class CriarExecucaoComponent {
         return this.values?.[i] || '';
       }
       else if (cp.type === FormComponentType.NUMBER) {
-        return Number(this.values?.[i]) || 0;
+        return String(this.values?.[i] || 0).replace('.', ',');
       }
       else if (cp.type === FormComponentType.DATE) {
         return new Date(this.values?.[i] || Date.now());
