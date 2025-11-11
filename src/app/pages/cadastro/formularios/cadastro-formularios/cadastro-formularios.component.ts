@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ICostCenter } from 'src/app/core/models/cost-center.entity';
 import { IFormComponent, FormComponentType } from 'src/app/core/models/form-component.entity';
 import { IForm } from 'src/app/core/models/form.entity';
+import { DecimalMaskDirective } from 'src/app/shared/decimal-mask.directive';
 import { defaultErrorHandler } from 'src/app/shared/default-error-handler';
 import { FormService } from 'src/app/shared/services/form.service';
 
@@ -84,6 +85,14 @@ export class CadastroFormulariosComponent {
   saveForm(): void {
     this.form.costCenterId = this.selectedCostCenter.id;
     this.form.costCenter = this.selectedCostCenter;
+
+    const components = structuredClone(this.formComponents);
+    for (let comp of components) {
+      if (comp.type === FormComponentType.NUMBER) {
+        if (comp.minValue) comp.minValue = DecimalMaskDirective.maskToNumber(String(comp.minValue));
+        if (comp.maxValue) comp.maxValue = DecimalMaskDirective.maskToNumber(String(comp.maxValue));
+      }
+    }
 
     if (this.isEditMode) {
       this.formService.update({ ...this.form, components: this.formComponents }).subscribe(defaultErrorHandler(() => {

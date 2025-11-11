@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormComponentType } from 'src/app/core/models/form-component.entity';
 import { IForm } from 'src/app/core/models/form.entity';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
+import { DecimalMaskDirective } from 'src/app/shared/decimal-mask.directive';
 import { defaultErrorHandler } from 'src/app/shared/default-error-handler';
 import { FormService } from 'src/app/shared/services/form.service';
 import Swal from 'sweetalert2';
@@ -85,6 +86,10 @@ export class CriarExecucaoComponent {
     this.auth.getLoggedUser().subscribe(defaultErrorHandler(async user => {
 
       const values = await Promise.all(this.values.map(async (v, i) => {
+
+        if (this.form.components[i].type === FormComponentType.NUMBER) {
+          v = DecimalMaskDirective.maskToNumber(String(v));
+        }
 
         if (this.form.components[i].required && (!v || v.length === 0)) {
           this.loading = false;
