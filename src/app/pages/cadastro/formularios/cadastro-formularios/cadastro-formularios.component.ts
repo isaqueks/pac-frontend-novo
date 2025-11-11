@@ -75,7 +75,7 @@ export class CadastroFormulariosComponent {
     const duplicatedComponent: IFormComponent = {
       ...componentToDuplicate,
       id: '', // new component should have no ID
-      title: componentToDuplicate.title + ' (Cópia)',
+      title: componentToDuplicate.title,
       options: [...(componentToDuplicate.options || [])] // deep copy of options array
     };
     this.formComponents.splice(index + 1, 0, duplicatedComponent);
