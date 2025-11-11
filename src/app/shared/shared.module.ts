@@ -52,6 +52,7 @@ import { CostCenterSelectComponent } from './components/cost-center-select/cost-
 import { PhonePipe } from './pipes/phone.pipe';
 import { ExecutionTableListComponent } from './components/execution-table-list/execution-table-list.component';
 import { RouterModule } from '@angular/router';
+import { DecimalMaskDirective } from './decimal-mask.directive';
 
 
 
@@ -89,7 +90,8 @@ import { RouterModule } from '@angular/router';
     PhonePipe,
     ClientSelectComponent,
     CostCenterSelectComponent,
-    ExecutionTableListComponent
+    ExecutionTableListComponent,
+    DecimalMaskDirective
   ],
   imports: [
     CommonModule,
@@ -117,7 +119,7 @@ import { RouterModule } from '@angular/router';
   exports: [
     BreadcrumbsComponent, ClientLogoComponent, ServicesComponent, CollectionComponent, CtaComponent, DesignedComponent, PlanComponent, FaqsComponent,LandingScrollspyDirective, ReviewComponent, CounterComponent, WorkProcessComponent, TeamComponent, ContactComponent, FooterComponent, ScrollspyDirective,
     WalletComponent, MarketPlaceComponent, FeaturesComponent, CategoriesComponent, DiscoverComponent, TopCreatorComponent, ProcessComponent, FindjobsComponent, CandidatesComponent, BlogComponent, JobcategoriesComponent, JobFooterComponent,
-    NgxMaskDirective, CpfCnpjPipe, PhonePipe, ClientSelectComponent, CostCenterSelectComponent, ExecutionTableListComponent
+    NgxMaskDirective, CpfCnpjPipe, PhonePipe, ClientSelectComponent, CostCenterSelectComponent, ExecutionTableListComponent, DecimalMaskDirective
   ]
 })
 export class SharedModule { }

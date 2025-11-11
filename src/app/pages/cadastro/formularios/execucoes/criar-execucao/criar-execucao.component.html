@@ -45,6 +45,7 @@
                         [required]="component.required"
                         [value]="values[i]"
                         (change)="values[i] = $event.target['value']"
+                        decimalMask
                       />
                     </div>
                   </div>

@@ -7,6 +7,7 @@ import { FormService } from '../../services/form.service';
 import { defaultErrorHandler } from '../../default-error-handler';
 import { IUser } from 'src/app/core/models/user.entity';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
+import { DecimalMaskDirective } from '../../decimal-mask.directive';
 
 @Component({
   selector: 'app-execution-table-list',
@@ -48,6 +49,9 @@ export class ExecutionTableListComponent {
     if (component.type === FormComponentType.CHECKBOX_LIST) {
       const trueValues = value.split(';').map(x => x === 'true');
       return component.options.filter((_, i) => trueValues[i]).join(', ');
+    }
+    else if (component.type === FormComponentType.NUMBER) {
+      return DecimalMaskDirective.formatToMask(value);
     }
 
     return value;
